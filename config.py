@@ -1,0 +1,1 @@
+db_url = "sqlite:///consult_debug.db" #'mysql+mysqlconnector://user:password@localhost:3306/dbname'

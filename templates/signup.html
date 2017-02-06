@@ -443,50 +443,32 @@ HR注册
 <td class="msgText"></td>
 </tr>
 </tbody></table>
-<table class="memberSignup jz-memberSignup" cellpadding="0" cellspacing="0">
-<tbody><tr>
-<td class="itemName"><div class="itemSpace"><span>帐号：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input class="g_itext itemEdit" id="memberSignupAcct" maxlength="50">&nbsp;<font class="g_stress">*</font></div></td>
-</tr>
-<tr>
-<td class="itemName"><div class="itemSpace"><span>密码：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" id="memberSignupPwd" maxlength="20">&nbsp;<font class="g_stress">*</font></div></td>
-</tr>
-<tr>
-<td class="itemName"><div class="itemSpace"><span>确认密码：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" id="memberSignupRepwd" maxlength="20">&nbsp;<font class="g_stress">*</font></div></td>
-</tr>
+<table class="memberSignup jz-memberSignup" cellpadding="6px" cellspacing="6px">
+<tbody>
+<form id="form-memberSignup" action="/welcome" method="post">
 <tr>
 <td class="itemName"><div class="itemSpace"><span>姓名：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input id="name" name="姓名" maxlength="50" placeholder="" class="g_itext itemEdit userAddItem isCheckUAI">&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input name="fullname" maxlength="50" placeholder="Your fullname" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>邮箱：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input id="email" name="邮箱" maxlength="50" placeholder="" class="g_itext itemEdit userAddItem"></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input name="email" type="email" maxlength="50" placeholder="Email address" class="g_itext itemEdit userAddItem" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
-<td class="itemName"><div class="itemSpace"><span>电话：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input id="phone" name="电话" maxlength="50" placeholder="" class="g_itext itemEdit userAddItem"></div></td>
+<td class="itemName"><div class="itemSpace"><span>密码：</span></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" placeholder="Create password" name="password" maxlength="20" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
-<td class="itemName"><div class="itemSpace"><span>留言：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><textarea id="memberSignupRemark" class="g_textarea itemArea j-textarea" maxlength="200"></textarea>
-<div class="j-clearfloat"></div></div>
-</td>
-</tr>
-<tr>
-<td class="itemName">验证码：</td>
-<td class="itemCtrl">
-<div class="memberSignupCaptcha"><input class="g_itext itemCaptcha" type="text" id="memberSignupCaptcha" maxlength="4" onkeydown="if(event.keyCode==13){Site.memberSignupSubmit(27, &quot;/index.jsp&quot;, 1)};"></div>
-<img alt="" id="memberSignupCaptchaImg" class="memberSignupCaptchaImg" onclick="Site.changeCaptchaImg(this)" title="看不清，换一张" src="http://www.qv12197932.icoc.me/validateCode.jsp">
-</td>
+<td class="itemName"><div class="itemSpace"><span>确认密码：</span></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" placeholder="Confirm password" name="password2" maxlength="20" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
 <td class="itemName"></td>
 <td class="itemCtrl">
-<input class="memberSignupBtn g_ibutton" extclass="g_ibutton" type="button" onclick="Site.memberSignupSubmit(27, &quot;/index.jsp&quot;, 1)" value="　 注册 　">
+<button class="button" type="submit">注册</button>
 </td>
 </tr>
+</form>
 </tbody></table>
 </div>
 </td>

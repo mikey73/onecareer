@@ -37,7 +37,7 @@ class LoginHandler(tornado.web.RequestHandler):
 
 class WelcomeHandler(tornado.web.RequestHandler):
     def post(self):
-        username = self.get_argument('username')
+        username = self.get_argument('email')
         password = self.get_argument('password')
 
         self.render('welcome.html', username=username, password=password)
@@ -46,11 +46,6 @@ class WelcomeHandler(tornado.web.RequestHandler):
 class SignupHandler(tornado.web.RequestHandler):
     def get(self, input):
         self.render('signup.html', target=input)
-
-
-class ValidateCodeHandler(tornado.web.RequestHandler):
-    def get(self, input):
-        self.redirect('http://www.qv12197932.icoc.me/validateCode.jsp')
 
 
 if __name__ == '__main__':
@@ -63,7 +58,6 @@ if __name__ == '__main__':
                   (r'/login/(\w+)', LoginHandler),
                   (r'/signup/(\w+)', SignupHandler),
                   (r'/welcome', WelcomeHandler),
-                  (r'/signup/validateCode(.*)', ValidateCodeHandler),
                   ],
         template_path=os.path.join(os.path.dirname(__file__), "templates",),
         static_path=os.path.join(os.path.dirname(__file__), "static"),
