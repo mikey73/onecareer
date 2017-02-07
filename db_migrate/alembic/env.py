@@ -21,8 +21,8 @@ import sys
 root = os.path.dirname(__file__)+'/../../'
 print root
 sys.path.append(root)
-from models.models import Model
-target_metadata = Model.metadata
+from models.base import load_models_metadata
+target_metadata = load_models_metadata()
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

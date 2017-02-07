@@ -442,9 +442,9 @@ background: linear-gradient(top,#70bfef,#4097ce);
 </td>
 <td class="titleCenter titleCenter27" valign="top">
 <div class="titleText titleText27"><span class="bannerNormalTitle fk_mainTitle mainTitle mainTitle27">
-{%if target == "jobhunter"%}
+{%if target == "Talent"%}
 求职者注册
-{%elif target == "mentor"%}
+{%elif target == "Mentor"%}
 导师注册
 {%else%}
 HR注册
@@ -468,23 +468,71 @@ HR注册
 </tbody></table>
 <table class="memberSignup jz-memberSignup" cellpadding="6px" cellspacing="6px">
 <tbody>
-<form id="form-memberSignup" action="/welcome" method="post">
+
+<form id="form-memberSignup" action="{{'/api/v1/account/register/'+target}}" method="post">
+<tr>
+<td class="itemName"><div class="itemSpace"><span></span></div></td>
+<td class="itemCtrl"><div class="itemSpace"><label id="info" style="color:red;" value="{{info}}"></label></div></td>
+</tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>姓名：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input name="fullname" maxlength="50" placeholder="Your fullname" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input name="fullname" type="text" maxlength="50" placeholder="First and last name" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
+{%if target == "HR"%}
 <tr>
 <td class="itemName"><div class="itemSpace"><span>邮箱：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input name="email" type="email" maxlength="50" placeholder="Email address" class="g_itext itemEdit userAddItem" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input name="email" type="email" maxlength="50" placeholder="Your work email" class="g_itext itemEdit userAddItem" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
+{%else%}
+<tr>
+<td class="itemName"><div class="itemSpace"><span>邮箱：</span></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input name="email" type="email" maxlength="50" placeholder="you@example.com" class="g_itext itemEdit userAddItem" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+</tr>
+{%end%}
 <tr>
 <td class="itemName"><div class="itemSpace"><span>密码：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" placeholder="Create password" name="password" maxlength="20" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" placeholder="Create password" name="password" id="password" onKeyUp="KeyUp()" maxlength="20" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>确认密码：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" placeholder="Confirm password" name="password2" maxlength="20" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" placeholder="Confirm password" name="password2" id="password2" onKeyUp="KeyUp()" onblur="LostFocus()" maxlength="20" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
+{%if target == "Talent"%}
+<tr>
+<td class="itemName"><div class="itemSpace"><span>求职方向：</span></div></td>
+<td class="itemCtrl"><div class="itemSpace"><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I0" name="industry" value="finance" checked="checked"><label for="M543F3siteFormCheckbox5I0">金融</label></div><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I1" name="industry" value="IT"><label for="M543F3siteFormCheckbox5I1">IT</label></div><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I1" name="industry" value="finance&IT"><label for="M543F3siteFormCheckbox5I1">金融&IT</label></div></div></td>
+</tr>
+{%elif target == "Mentor"%}
+<tr>
+<td class="itemName"><div class="itemSpace"><span>电话：</span></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input name="phone" maxlength="50" placeholder="xxx-xxx-xxxx" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+</tr>
+<tr>
+<td class="itemName"><div class="itemSpace"><span>擅长领域：</span></div></td>
+<td class="itemCtrl"><div class="itemSpace"><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I0" name="industry" value="finance" checked="checked"><label for="M543F3siteFormCheckbox5I0">金融</label></div><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I1" name="industry" value="IT"><label for="M543F3siteFormCheckbox5I1">IT</label></div><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I1" name="industry" value="finance&IT"><label for="M543F3siteFormCheckbox5I1">金融&IT</label></div></div></td>
+</tr>
+{%else%}
+<tr>
+<td class="itemName"><div class="itemSpace"><span>电话：</span></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input name="phone" maxlength="50" placeholder="xxx-xxx-xxxx" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+</tr>
+<tr>
+<td class="itemName"><div class="itemSpace"><span>职位：</span></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input name="jobTitle" type="text" maxlength="50" placeholder="Your role or position" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+</tr>
+<tr>
+<td class="itemName"><div class="itemSpace"><span>公司名：</span></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input name="companyName" type="text" maxlength="50" placeholder="Company name" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+</tr>
+<tr>
+<td class="itemName"><div class="itemSpace"><span>公司网站：</span></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input name="companyURL" maxlength="50" placeholder="www.yourcompany.com" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+</tr>
+<tr>
+<td class="itemName"><div class="itemSpace"><span>招聘方向：</span></div></td>
+<td class="itemCtrl"><div class="itemSpace"><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I0" name="industry" value="finance" checked="checked"><label for="M543F3siteFormCheckbox5I0">金融</label></div><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I1" name="industry" value="IT"><label for="M543F3siteFormCheckbox5I1">IT</label></div><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I1" name="industry" value="finance&IT"><label for="M543F3siteFormCheckbox5I1">金融&IT</label></div></div></td>
+</tr>
+{%end%}
 <tr>
 <td class="itemName"></td>
 <td class="itemCtrl">
@@ -636,7 +684,26 @@ HR注册
 
 <script type="text/javascript">
 
-
+function KeyUp() {
+             var a = $('#password').val();
+             //alert(a);
+             var b = $('#password2').val();
+             //alert(b);
+			 if (a=='' || b=='') {
+			 document.getElementById('info').innerHTML = '';//通过id获取label,修改值
+			 return false;
+			 }
+             if (a != b) {
+                 //alert("error")
+				 document.getElementById('info').innerHTML = '两次输入密码不一致!';//通过id获取label,修改值
+				 $('#submit').attr('disabled', 'disabled');
+             }
+			 else{
+                 //alert("error")
+				 document.getElementById('info').innerHTML = '';//通过id获取label,修改值
+				 $('#submit').removeAttr('disabled');
+             }
+         }
 
 function showYuanDanWindow(){
 	var hasShowYuanDanLuckyGuy = $.cookie("hasShowYuanDanLuckyGuy",{path:"/"});
@@ -704,7 +771,7 @@ function showYuanDanWindow(){
 
 
 
-<script type="text/javascript">
+<script type="text/javascript"> 
 var _jsErrCahche = [];
 window.onerror = function(sMsg,sUrl,sLine){
 	if (typeof Site == 'undefined') {
@@ -883,7 +950,7 @@ var nav2SubMenu=[];
 var nav103SubMenu=[];
 var nav104SubMenu=[];
 var nav101SubMenu=[];
-var nav18SubMenu=[{"hidden":false,"colId":112,"href":"/login/jobhunter","target":" target='_self'","colName":"求职者","html":"<span class='itemName0'>求职者<\/span>","title":""},{"hidden":false,"colId":113,"href":"/login/mentor","target":" target='_self'","colName":"导师","html":"<span class='itemName0'>导师<\/span>","title":""},{"hidden":false,"colId":114,"href":"/login/HR","target":" target='_self'","colName":"HR","html":"<span class='itemName0'>HR<\/span>","title":""}];
+var nav18SubMenu=[{"hidden":false,"colId":112,"href":"/login/Talent","target":" target='_self'","colName":"求职者","html":"<span class='itemName0'>求职者<\/span>","title":""},{"hidden":false,"colId":113,"href":"/login/Mentor","target":" target='_self'","colName":"导师","html":"<span class='itemName0'>导师<\/span>","title":""},{"hidden":false,"colId":114,"href":"/login/HR","target":" target='_self'","colName":"HR","html":"<span class='itemName0'>HR<\/span>","title":""}];
 
 var _customBackgroundData = {"styleDefault":true,"s":true,"h":false,"r":3,"o":"","sw":-1,"e":0,"wbh":-1,"wbw":-1,"clw":-1,"crw":-1,"id":"","p":"","bBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cmBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"bm":{},"cm":{},"cp":{"y":0}};          //自定义的数据
 var _templateBackgroundData = {"id":"","bBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cmBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cp":{"y":0},"s":true,"h":false,"r":3,"o":"","sw":-1,"e":0,"wbh":-1,"wbw":-1,"clw":-1,"crw":-1,"p":"","bm":{},"cm":{}};// 模版的数据

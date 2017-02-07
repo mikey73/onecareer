@@ -1,67 +1,55 @@
 import os.path
+from environment import *   # important to setup syspath
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
-from tornado.options import define, options
 import tornado.autoreload
-
-define("port", default=8888, help="run on the given port", type=int)
-define("debug", default=True, help="Debug Mode",type=bool)
-
-
-class IndexHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.render('index.html')
-
-
-class MentorsHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.render('mentors.html')
+import logging
+import pprint
+import models
+from common.mytypes import MagicDict
+from basehandlers import get_cur_handler
+from settings import settings, options
+from urls import url_patterns
+from tools.conn import Connections
+from tools.bg_tasks import BackgroundTasks
 
 
-class CourseHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.render('course.html')
+class Application(tornado.web.Application):
+    def __init__(self):
+        tornado.web.Application.__init__(self, url_patterns, **settings)
+        self.config = MagicDict(options.as_dict())
+        self.conn = Connections(self.config)
+        self.bg_tasks = BackgroundTasks(self.config, self.conn)
+        self.init_db()
 
+    def init_db(self):
+        models.bind_engine(self.conn.db_engine)
+        models.set_scope_func(get_cur_handler)
 
-class AboutHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.render('about.html')
+        if not self.config["debug"]:
+            return
 
+        def close_db_engine():
+            self.conn.db_engine.dispose()
 
-class LoginHandler(tornado.web.RequestHandler):
-    def get(self, input):
-        self.render('login.html', target=input)
+        tornado.autoreload.add_reload_hook(close_db_engine)
 
+        # init debug database
+        models.drop_all(self.conn.db_engine)
+        models.create_all(self.conn.db_engine)
 
-class WelcomeHandler(tornado.web.RequestHandler):
-    def post(self):
-        username = self.get_argument('email')
-        password = self.get_argument('password')
-
-        self.render('welcome.html', username=username, password=password)
-
-
-class SignupHandler(tornado.web.RequestHandler):
-    def get(self, input):
-        self.render('signup.html', target=input)
+        api, user = models.init_debug_data()
+        self.conn.cache.user_flags.delete(user.pk)    # remove cache
 
 
 if __name__ == '__main__':
     tornado.options.parse_command_line()
-    app = tornado.web.Application(
-        handlers=[(r'/', IndexHandler),
-                  (r'/mentors', MentorsHandler),
-                  (r'/course', CourseHandler),
-                  (r'/about', AboutHandler),
-                  (r'/login/(\w+)', LoginHandler),
-                  (r'/signup/(\w+)', SignupHandler),
-                  (r'/welcome', WelcomeHandler),
-                  ],
-        template_path=os.path.join(os.path.dirname(__file__), "templates",),
-        static_path=os.path.join(os.path.dirname(__file__), "static"),
-    )
+    app = Application()
     http_server = tornado.httpserver.HTTPServer(app)
-    http_server.listen(options.port)
+    http_server.listen(options.port, options.host)
+    logging.critical("Tornado server started on %s:%s" %
+                     (options.host, options.port))
+    pprint.pprint(url_patterns)
     tornado.ioloop.IOLoop.instance().start()

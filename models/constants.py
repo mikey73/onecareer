@@ -13,3 +13,7 @@ class AccountRoles(BaseStatus):
     Talent = "Talent"
     Mentor = "Mentor"
     HR = "HR"
+
+
+class APISites(BaseStatus):
+    Consult = "Consult"

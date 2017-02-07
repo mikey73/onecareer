@@ -307,7 +307,7 @@ border-radius: .5em;
 <table class="navBottom" cellpadding="0" cellspacing="0"><tbody><tr><td class="navBottomLeft"></td><td class="navBottomCenter"></td><td class="navBottomRight"></td></tr></tbody></table>
 </div>
 </div>
-<a href="/login/jobhunter" style="display:none;">求职者</a><a href="/login/mentor" style="display:none;">导师</a><a href="/login/HR" style="display:none;">HR</a>
+<a href="/login/Talent" style="display:none;">求职者</a><a href="/login/Mentor" style="display:none;">导师</a><a href="/login/HR" style="display:none;">HR</a>
 								</td>
 								<td class="bannerRight"></td>
 							</tr>
@@ -379,9 +379,9 @@ border-radius: .5em;
 <div class="formMiddleContent formMiddleContent520" tabstyle="0" style="height: 242px; overflow-y: hidden;">
 <div class="floatImg floatImg_J"><a hidefocus="true" class="J_floatImg_jump">
 <div class="floatImgWrap">
-{%if target == "jobhunter"%}
+{%if target == "Talent"%}
 <img id="float_img_520" class="float_in_img J_defImage" src={{ static_url("images/ABUIABACGAAgiKjVxAUozq_7gQEw0gE4lgI.jpg")}} style=" height:220px; width:180px;">
-{%elif target == "mentor"%}
+{%elif target == "Mentor"%}
 <img id="float_img_520" class="float_in_img J_defImage" src={{ static_url("images/ABUIABACGAAgr6fVxAUo8OCe-Qcw0QE4kQI.jpg")}} style=" height:220px; width:180px;">
 {%else%}
 <img id="float_img_520" class="float_in_img J_defImage" src={{ static_url("images/ABUIABACGAAgpKPVxAUo4PKdUzDSATjtAQ.jpg")}} style=" height:220px; width:180px;">
@@ -414,9 +414,9 @@ border-radius: .5em;
 </td>
 <td class="titleCenter titleCenter517" valign="top">
 <div class="titleText titleText517"><span class="bannerNormalTitle fk_mainTitle mainTitle mainTitle517">
-{%if target == "jobhunter"%}
+{%if target == "Talent"%}
 求职者登录
-{%elif target == "mentor"%}
+{%elif target == "Mentor"%}
 导师登录
 {%else%}
 HR登录
@@ -432,7 +432,7 @@ HR登录
 <td class="formMiddleLeft formMiddleLeft517"></td>
 <td class="formMiddleCenter formMiddleCenter517 " valign="top">
 <div class="formMiddleContent formMiddleContent517 fk-formContentOtherPadding" tabstyle="0">
-<form id="form-memberLogin" action="/welcome" method="post">
+<form id="form-memberLogin" action="{{'/api/v1/account/login/'+target}}" method="post">
 <div class="J_memberLoginPanel memberLoginPanel member">
 <div class="memberLoginItemList">
 <div class="J_memberLoginItem memberLoginItem itemSpace">
@@ -440,10 +440,6 @@ HR登录
 </div>
 <div class="J_memberLoginItem memberLoginItem itemSpace">
 <input id="password" name="password" class="generateInput memberPwdInput" type="password" placeholder="密码" onkeydown="if (Fai.isEnterKey(event)){Site.memberLogin1(517);}" required />
-</div>
-<div class="J_memberLoginItem memberCaptcha memberLoginItem">
-<input class="memberCaptchaInput" type="text" placeholder="验证码">
-<img alt="" id="memberCaptchaImg" class="memberCaptchaImg" onclick="Site.changeCaptchaImg(this)" title="看不清，换一张">
 </div>
 <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -850,7 +846,7 @@ var nav2SubMenu=[];
 var nav103SubMenu=[];
 var nav104SubMenu=[];
 var nav101SubMenu=[];
-var nav18SubMenu=[{"hidden":false,"colId":112,"href":"/login/jobhunter","target":" target='_self'","colName":"求职者","html":"<span class='itemName0'>求职者<\/span>","title":""},{"hidden":false,"colId":113,"href":"/login/mentor","target":" target='_self'","colName":"导师","html":"<span class='itemName0'>导师<\/span>","title":""},{"hidden":false,"colId":114,"href":"/login/HR","target":" target='_self'","colName":"HR","html":"<span class='itemName0'>HR<\/span>","title":""}];
+var nav18SubMenu=[{"hidden":false,"colId":112,"href":"/login/Talent","target":" target='_self'","colName":"求职者","html":"<span class='itemName0'>求职者<\/span>","title":""},{"hidden":false,"colId":113,"href":"/login/Mentor","target":" target='_self'","colName":"导师","html":"<span class='itemName0'>导师<\/span>","title":""},{"hidden":false,"colId":114,"href":"/login/HR","target":" target='_self'","colName":"HR","html":"<span class='itemName0'>HR<\/span>","title":""}];
 
 var _customBackgroundData = {"styleDefault":true,"s":true,"h":false,"r":3,"o":"","sw":-1,"e":0,"wbh":-1,"wbw":-1,"clw":-1,"crw":-1,"id":"","p":"","bBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cmBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"bm":{},"cm":{},"cp":{"y":0}};          //自定义的数据
 var _templateBackgroundData = {"id":"","bBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cmBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cp":{"y":0},"s":true,"h":false,"r":3,"o":"","sw":-1,"e":0,"wbh":-1,"wbw":-1,"clw":-1,"crw":-1,"p":"","bm":{},"cm":{}};// 模版的数据
