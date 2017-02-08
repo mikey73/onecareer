@@ -290,10 +290,10 @@ border-radius: .5em;
 <td class="itemRight"></td>
 </tr>
 </tbody></table>
-<div class="itemSep"></div><table title="" class="item itemCol18 itemIndex5" cellpadding="0" cellspacing="0" colid="18" id="nav18">
+<div class="itemSep"></div><table title="" class="item itemCol18 itemIndex5" cellpadding="0" cellspacing="0" colid="18" id="nav18"onclick="window.open(&quot;/login&quot;, &quot;_self&quot;)" _jump="window.open(&quot;/login&quot;, &quot;_self&quot;)">
 <tbody><tr>
 <td class="itemLeft"></td>
-<td class="itemCenter"><a hidefocus="true" style="outline:none;" href="" target="_self" onclick="return false;"><span class="itemName0">登录</span></a></td>
+<td class="itemCenter"><a hidefocus="true" style="outline:none;" href="/login" target="_self" onclick="return false;"><span class="itemName0">登录</span></a></td>
 <td class="itemRight"></td>
 </tr>
 </tbody></table>
@@ -307,7 +307,6 @@ border-radius: .5em;
 <table class="navBottom" cellpadding="0" cellspacing="0"><tbody><tr><td class="navBottomLeft"></td><td class="navBottomCenter"></td><td class="navBottomRight"></td></tr></tbody></table>
 </div>
 </div>
-<a href="/login/Talent" style="display:none;">求职者</a><a href="/login/Mentor" style="display:none;">导师</a><a href="/login/HR" style="display:none;">HR</a>
 								</td>
 								<td class="bannerRight"></td>
 							</tr>
@@ -379,13 +378,7 @@ border-radius: .5em;
 <div class="formMiddleContent formMiddleContent520" tabstyle="0" style="height: 242px; overflow-y: hidden;">
 <div class="floatImg floatImg_J"><a hidefocus="true" class="J_floatImg_jump">
 <div class="floatImgWrap">
-{%if target == "Talent"%}
 <img id="float_img_520" class="float_in_img J_defImage" src={{ static_url("images/ABUIABACGAAgiKjVxAUozq_7gQEw0gE4lgI.jpg")}} style=" height:220px; width:180px;">
-{%elif target == "Mentor"%}
-<img id="float_img_520" class="float_in_img J_defImage" src={{ static_url("images/ABUIABACGAAgr6fVxAUo8OCe-Qcw0QE4kQI.jpg")}} style=" height:220px; width:180px;">
-{%else%}
-<img id="float_img_520" class="float_in_img J_defImage" src={{ static_url("images/ABUIABACGAAgpKPVxAUo4PKdUzDSATjtAQ.jpg")}} style=" height:220px; width:180px;">
-{%end%}
 </div></a>
 </div></div>
 </td>
@@ -414,13 +407,8 @@ border-radius: .5em;
 </td>
 <td class="titleCenter titleCenter517" valign="top">
 <div class="titleText titleText517"><span class="bannerNormalTitle fk_mainTitle mainTitle mainTitle517">
-{%if target == "Talent"%}
-求职者登录
-{%elif target == "Mentor"%}
-导师登录
-{%else%}
-HR登录
-{%end%}</span></div>
+One Career会员登录
+</span></div>
 </td>
 <td class="titleRight titleRight517" valign="top">
 </td>
@@ -432,7 +420,7 @@ HR登录
 <td class="formMiddleLeft formMiddleLeft517"></td>
 <td class="formMiddleCenter formMiddleCenter517 " valign="top">
 <div class="formMiddleContent formMiddleContent517 fk-formContentOtherPadding" tabstyle="0">
-<form id="form-memberLogin" action="{{'/api/v1/account/login/'+target}}" method="post">
+<form id="form-memberLogin" action="" method="post">
 <div class="J_memberLoginPanel memberLoginPanel member">
 <div class="memberLoginItemList">
 <div class="J_memberLoginItem memberLoginItem itemSpace">
@@ -451,9 +439,9 @@ HR登录
 </div>
 </div>
 <div class="signup">
-<a class="regAcct" hidefocus="true" href={{'/login/'+target}}>LinkedIn登录&gt;</a>
+<a class="regAcct" hidefocus="true" href="/login">LinkedIn登录&gt;</a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a class="regAcct" hidefocus="true" href={{'/signup/'+target}}><font color="#FF6347">免费注册&gt;</font></a>
+<a class="regAcct" hidefocus="true" href="/signup"><font color="#FF6347">免费注册&gt;</font></a>
 </div>
 </div>
 </form>
@@ -602,6 +590,8 @@ HR登录
 function checkinfo(){
 
 			var password = $('#password').val();
+			
+			document.getElementById('info').innerHTML = '';
 			
 			if (checkSubmitEmail()==false){
 				return false;
@@ -902,7 +892,7 @@ var _siteDomain = 'http://www.qv12197932.icoc.me';
 var _openDays = 1;
 var _openHours = 24;
 var _resRoot = 'http://0.ss.faisys.com';
-var _colId = 112;
+var _colId = 18;
 var _extId = 0;
 var _fromColId = -1;
 var _designAuth = false;
@@ -920,8 +910,7 @@ var nav2SubMenu=[];
 var nav103SubMenu=[];
 var nav104SubMenu=[];
 var nav101SubMenu=[];
-var nav18SubMenu=[{"hidden":false,"colId":112,"href":"/login/Talent","target":" target='_self'","colName":"求职者","html":"<span class='itemName0'>求职者<\/span>","title":""},{"hidden":false,"colId":113,"href":"/login/Mentor","target":" target='_self'","colName":"导师","html":"<span class='itemName0'>导师<\/span>","title":""},{"hidden":false,"colId":114,"href":"/login/HR","target":" target='_self'","colName":"HR","html":"<span class='itemName0'>HR<\/span>","title":""}];
-
+var nav18SubMenu=[];
 var _customBackgroundData = {"styleDefault":true,"s":true,"h":false,"r":3,"o":"","sw":-1,"e":0,"wbh":-1,"wbw":-1,"clw":-1,"crw":-1,"id":"","p":"","bBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cmBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"bm":{},"cm":{},"cp":{"y":0}};          //自定义的数据
 var _templateBackgroundData = {"id":"","bBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cmBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cp":{"y":0},"s":true,"h":false,"r":3,"o":"","sw":-1,"e":0,"wbh":-1,"wbw":-1,"clw":-1,"crw":-1,"p":"","bm":{},"cm":{}};// 模版的数据
 var _useTemplateBanner = true;				// 是否使用全局模版

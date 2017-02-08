@@ -175,7 +175,7 @@ class AccountHandler(APIHandler):
     """ Account handler, some actions are auth required """
     url_patterns = (
         # pattern,     action name,  HTTP method(s)
-        ["account/register/?(\w+)/?$", "register", ("POST",)],
+        ["account/register/?$", "register", ("POST",)],
         ["account/login/?$", "login", ("POST",)],
         ["account/validate/?$", "validate", ("POST",)],
         ["account/recover/?$", "recover", ("POST",)],
@@ -228,28 +228,16 @@ class AccountHandler(APIHandler):
         Required("email"): All(unicode, Strip, Email, Lower,),
         Required("password"): All(unicode, Strip, Length(6, 64)),
         Required("fullname"): All(unicode, Strip, Length(2, 64)),
-        Required("industry"): All(unicode, Strip),
-        Optional("phone"): All(unicode, Strip),
-        Optional("jobTitle"): All(unicode, Strip),
-        Optional("companyName"): All(unicode, Strip),
-        Optional("companyURL"): All(unicode, Strip),
+        Required("role"): All(unicode, Strip),
     })
-    def register(self, input):
+    def register(self):
         fullname = self.form.fullname
         email = self.form.email
         password = self.form.password
-        industry = self.form.industry
+        role = self.form.role
 
-        if input not in db.AccountRoles.values():
+        if role not in db.AccountRoles.values():
             raise errors.InvalidRoleError
-
-        if input != db.AccountRoles.Talent:
-            phone = self.form.phone
-
-        if input == db.AccountRoles.HR:
-            jobTitle = self.form.jobTitle
-            companyName = self.form.companyName
-            companyURL = self.form.companyURL
 
         if db.Account.check_exist(email=email, api_pk=self.api.id):
             raise errors.EmailExistsError
@@ -257,7 +245,7 @@ class AccountHandler(APIHandler):
         user = db.Account.new(fullname=fullname,
                               email=email,
                               password=password,
-                              role=input,
+                              role=role,
                               api_pk=self.api.id)
 
         company = self.config.site_settings[self.api.site]["company"]

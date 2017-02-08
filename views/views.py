@@ -7,8 +7,8 @@ class ViewHandler(BaseHandler):
         ["mentors/?$", "mentors", ("GET",)],
         ["course/?$", "course", ("GET",)],
         ["about/?$", "about", ("GET",)],
-        ["login/?([0-9a-zA-z]*)/?$", "login", ("GET",)],
-        ["signup/?([0-9a-zA-z]*)/?$", "signup", ("GET",)],
+        ["login/?$", "login", ("GET",)],
+        ["signup/?$", "signup", ("GET",)],
         ["welcome/?$", "welcome", ("POST",)],
         ["verify/?([0-9a-zA-z]*)/?$", "verify", ("GET",)],
     )
@@ -22,11 +22,11 @@ class ViewHandler(BaseHandler):
     def about(self):
         self.render('about.html')
 
-    def login(self, target=None):
-        self.render('login.html', target=target)
+    def login(self):
+        self.render('login.html')
 
-    def signup(self, target=None):
-        self.render('signup.html', target=target)
+    def signup(self):
+        self.render('signup.html')
 
     def welcome(self):
          info = self.get_argument('info')
