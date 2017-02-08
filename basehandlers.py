@@ -381,6 +381,11 @@ class NotFoundHandler(JSONHandler):
     head = post = delete = patch = put = options = get
 
 
+class IndexHandler(BaseHandler):
+    def get(self):
+        self.render('index.html')
+
+
 class APIHandler(JSONHandler):
     """ APIHandler, `client_id` and `client_secret` required for all requests """
     def __init__(self, *args, **kwargs):

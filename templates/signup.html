@@ -472,30 +472,30 @@ HR注册
 <form id="form-memberSignup" action="{{'/api/v1/account/register/'+target}}" method="post">
 <tr>
 <td class="itemName"><div class="itemSpace"><span></span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><label id="info" style="color:red;" value="{{info}}"></label></div></td>
+<td class="itemCtrl"><div class="itemSpace"><label id="info" style="color:red;" value=""></label></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>姓名：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input name="fullname" type="text" maxlength="50" placeholder="First and last name" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input id="fullname" type="text" maxlength="50" placeholder="First and last name" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 {%if target == "HR"%}
 <tr>
 <td class="itemName"><div class="itemSpace"><span>邮箱：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input name="email" type="email" maxlength="50" placeholder="Your work email" class="g_itext itemEdit userAddItem" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input id="email" type="email" maxlength="50" placeholder="Your work email" class="g_itext itemEdit userAddItem" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 {%else%}
 <tr>
 <td class="itemName"><div class="itemSpace"><span>邮箱：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input name="email" type="email" maxlength="50" placeholder="you@example.com" class="g_itext itemEdit userAddItem" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input id="email" type="email" maxlength="50" placeholder="you@example.com" class="g_itext itemEdit userAddItem" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 {%end%}
 <tr>
 <td class="itemName"><div class="itemSpace"><span>密码：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" placeholder="Create password" name="password" id="password" onKeyUp="KeyUp()" maxlength="20" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" placeholder="Create password" id="password" onkeyup="KeyUp()" maxlength="20" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>确认密码：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" placeholder="Confirm password" name="password2" id="password2" onKeyUp="KeyUp()" onblur="LostFocus()" maxlength="20" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" placeholder="Confirm password" id="password2" onkeyup="KeyUp()" maxlength="20" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 {%if target == "Talent"%}
 <tr>
@@ -505,7 +505,7 @@ HR注册
 {%elif target == "Mentor"%}
 <tr>
 <td class="itemName"><div class="itemSpace"><span>电话：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input name="phone" maxlength="50" placeholder="xxx-xxx-xxxx" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input id="phone" maxlength="50" placeholder="xxx-xxx-xxxx" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>擅长领域：</span></div></td>
@@ -514,19 +514,19 @@ HR注册
 {%else%}
 <tr>
 <td class="itemName"><div class="itemSpace"><span>电话：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input name="phone" maxlength="50" placeholder="xxx-xxx-xxxx" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input id="phone" maxlength="50" placeholder="xxx-xxx-xxxx" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>职位：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input name="jobTitle" type="text" maxlength="50" placeholder="Your role or position" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input id="jobTitle" type="text" maxlength="50" placeholder="Your role or position" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>公司名：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input name="companyName" type="text" maxlength="50" placeholder="Company name" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input id="companyName" type="text" maxlength="50" placeholder="Company name" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>公司网站：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input name="companyURL" maxlength="50" placeholder="www.yourcompany.com" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input id="companyURL" maxlength="50" placeholder="www.yourcompany.com" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>招聘方向：</span></div></td>
@@ -536,7 +536,7 @@ HR注册
 <tr>
 <td class="itemName"></td>
 <td class="itemCtrl">
-<button class="button" type="submit">注册</button>
+<button class="button" type="button" id="submit" onclick="checkinfo()">注册</button>
 </td>
 </tr>
 </form>
@@ -704,6 +704,130 @@ function KeyUp() {
 				 $('#submit').removeAttr('disabled');
              }
          }
+		 
+function checkinfo(){
+
+			var a = $('#password').val();
+			var b = $('#password2').val();
+			var fullname = $('#fullname').val()
+			var jobTitle = $('#jobTitle').val()
+			var companyName = $('#companyName').val()
+			var companyURL = $('#companyURL').val()
+			
+			if (fullname.replace(/(^s*)|(s*$)/g, "").length ==0) { 
+				document.getElementById('info').innerHTML = '姓名不能为空！'; 
+				return false;
+			}
+			
+			if (checkSubmitEmail()==false){
+				return false;
+			}
+			
+			if (a.length < 6) {
+                 //alert("error")
+				 document.getElementById('info').innerHTML = '密码长度至少为6位!';//通过id获取label,修改值
+				 return false;
+             }
+			
+			if (a != b) {
+                 //alert("error")
+				 document.getElementById('info').innerHTML = '两次输入密码不一致!';//通过id获取label,修改值
+				 return false;
+             }
+			
+			if ("{{target}}" != 'Talent'){
+				if (checkSubmitPhone()==false){
+					return false;
+				}
+			}
+			
+			if ("{{target}}" == 'HR'){
+				if (jobTitle.replace(/(^s*)|(s*$)/g, "").length ==0) { 
+					document.getElementById('info').innerHTML = '职位不能为空！'; 
+					return false;
+				}
+				if (companyName.replace(/(^s*)|(s*$)/g, "").length ==0) { 
+					document.getElementById('info').innerHTML = '公司名不能为空！'; 
+					return false;
+				}
+				if (companyURL.replace(/(^s*)|(s*$)/g, "").length ==0) { 
+					document.getElementById('info').innerHTML = '公司网址不能为空！'; 
+					return false;
+				}
+			}
+			ajax_post();
+}
+
+//jquery验证邮箱 
+function checkSubmitEmail() { 
+	if ($("#email").val() == "") { 
+	//$("#confirmMsg").html("<font color='red'>邮箱地址不能为空！</font>"); 
+	document.getElementById('info').innerHTML = '邮箱不能为空!';
+	$("#email").focus(); 
+	return false; 
+	} 
+	if (!$("#email").val().match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)) { 
+	document.getElementById('info').innerHTML = '邮箱格式不正确!';
+	//$("#confirmMsg").html("<font color='red'>邮箱格式不正确！请重新输入！</font>"); 
+	$("#email").focus(); 
+	return false; 
+	} 
+	return true; 
+} 
+
+function checkSubmitPhone(){
+		var phone = $('#phone').val();
+		if (phone.replace(/(^s*)|(s*$)/g, "").length ==0) { 
+				document.getElementById('info').innerHTML = '电话不能为空!';
+				return false;
+		}
+		for(ilen=0;ilen<phone.length;ilen++)
+		{
+			if((phone.charAt(ilen) < '0' || phone.charAt(ilen) > '9') && (phone.charAt(ilen)!='-') )
+			{
+				document.getElementById('info').innerHTML = '非法的电话号码!';
+				return false;
+			}
+		}
+		return true;
+}
+
+function ajax_post(){
+	var industry='';
+	var val=$('input:radio[name="industry"]:checked').val();
+            if(val==null){
+                alert("请至少选择一个行业!");
+                return false;
+            }
+            else{
+                industry=val;
+            }
+			
+  $.post("{{'/api/v1/account/register/'+target}}",
+  {
+	email:$('#email').val(),
+	password:$('#password').val(),
+	fullname:$('#fullname').val(),
+	industry:industry,
+	phone:$('#phone').val(),
+	jobTitle:$('#jobTitle').val(),
+	companyName:$('#companyName').val(),
+	companyURL:$('#companyURL').val(),
+  },
+  function(data){
+    //$('#msg').html("please enter the email!");
+	//$('#info').html(data);
+	var obj = jQuery.parseJSON(data);
+	if (obj.status == "ok"){
+	document.getElementById('info').innerHTML = "注册成功，请点击确认邮件中链接激活账号！";
+	}
+	else{
+	document.getElementById('info').innerHTML = obj.message;
+	}
+    //alert(data);
+  },
+  "text");//这里返回的类型有：json,html,xml,text
+}
 
 function showYuanDanWindow(){
 	var hasShowYuanDanLuckyGuy = $.cookie("hasShowYuanDanLuckyGuy",{path:"/"});

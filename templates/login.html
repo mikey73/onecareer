@@ -436,6 +436,9 @@ HR登录
 <div class="J_memberLoginPanel memberLoginPanel member">
 <div class="memberLoginItemList">
 <div class="J_memberLoginItem memberLoginItem itemSpace">
+<label id="info" style="color:red;" value=""></label>
+</div>
+<div class="J_memberLoginItem memberLoginItem itemSpace">
 <input id="email" name="email" class="generateInput memberAcctInput" type="email" placeholder="电子邮箱" required />
 </div>
 <div class="J_memberLoginItem memberLoginItem itemSpace">
@@ -443,7 +446,7 @@ HR登录
 </div>
 <div class="row">
             <div class="col-xs-12 col-md-12">
-              <button class="button" type="submit">登录</button>
+              <button class="button" type="button" onclick="checkinfo()">登录</button>
             </div>
 </div>
 </div>
@@ -596,7 +599,78 @@ HR登录
 
 <script type="text/javascript">
 
+function checkinfo(){
 
+			var password = $('#password').val();
+			
+			if (checkSubmitEmail()==false){
+				return false;
+			}
+			
+			if (password.replace(/(^s*)|(s*$)/g, "").length ==0) { 
+				document.getElementById('info').innerHTML = '密码不能为空！'; 
+				return false;
+			}
+			
+			if (password.replace(/(^s*)|(s*$)/g, "").length < 6) { 
+				document.getElementById('info').innerHTML = '密码长度至少为6位！'; 
+				return false;
+			}
+			
+			ajax_post();
+}
+
+//jquery验证邮箱 
+function checkSubmitEmail() { 
+	if ($("#email").val() == "") { 
+	//$("#confirmMsg").html("<font color='red'>邮箱地址不能为空！</font>"); 
+	document.getElementById('info').innerHTML = '邮箱不能为空!';
+	$("#email").focus(); 
+	return false; 
+	} 
+	if (!$("#email").val().match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)) { 
+	document.getElementById('info').innerHTML = '邮箱格式不正确!';
+	//$("#confirmMsg").html("<font color='red'>邮箱格式不正确！请重新输入！</font>"); 
+	$("#email").focus(); 
+	return false; 
+	} 
+	return true; 
+}
+
+function ajax_post(){
+  $.post("/api/v1/account/login",
+  {
+	email:$('#email').val(),
+	password:$('#password').val(),
+  },
+  function(data){
+    //$('#msg').html("please enter the email!");
+	//$('#info').html(data);
+	var obj = jQuery.parseJSON(data);
+	if (obj.status == "ok"){
+	StandardPost("/welcome",{info:'欢迎'+obj.response.fullname+'!'})
+	}
+	else{
+	document.getElementById('info').innerHTML = obj.message;
+	}
+    //alert(data);
+  },
+  "text");//这里返回的类型有：json,html,xml,text
+}
+
+function StandardPost (url,args) 
+    {
+        var form = $("<form method='post'></form>");
+        form.attr({"action":url});
+        for (arg in args)
+        {
+            var input = $("<input type='hidden'>");
+            input.attr({"name":arg});
+            input.val(args[arg]);
+            form.append(input);
+        }
+        form.submit();
+    }
 
 function showYuanDanWindow(){
 	var hasShowYuanDanLuckyGuy = $.cookie("hasShowYuanDanLuckyGuy",{path:"/"});

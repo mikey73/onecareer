@@ -4,16 +4,14 @@ from basehandlers import BaseHandler
 class ViewHandler(BaseHandler):
     url_patterns = (
         # pattern,     action name,  HTTP method(s)
-        ["index/?$", "index", ("GET", )],
         ["mentors/?$", "mentors", ("GET",)],
         ["course/?$", "course", ("GET",)],
         ["about/?$", "about", ("GET",)],
-        ["login/?(\w+)/?$", "login", ("GET",)],
-        ["signup/?(\w+)/?$", "signup", ("GET",)],
+        ["login/?([0-9a-zA-z]*)/?$", "login", ("GET",)],
+        ["signup/?([0-9a-zA-z]*)/?$", "signup", ("GET",)],
+        ["welcome/?$", "welcome", ("POST",)],
+        ["verify/?([0-9a-zA-z]*)/?$", "verify", ("GET",)],
     )
-
-    def index(self):
-        self.render('index.html')
 
     def mentors(self):
         self.render("mentors.html")
@@ -28,4 +26,11 @@ class ViewHandler(BaseHandler):
         self.render('login.html', target=target)
 
     def signup(self, target=None):
-        self.render('signup.html', target=target, info="")
+        self.render('signup.html', target=target)
+
+    def welcome(self):
+         info = self.get_argument('info')
+         self.render('welcome.html', info=info)
+
+    def verify(self, vhash=None):
+        self.render('verify.html', vhash=vhash)

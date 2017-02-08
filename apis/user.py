@@ -176,7 +176,7 @@ class AccountHandler(APIHandler):
     url_patterns = (
         # pattern,     action name,  HTTP method(s)
         ["account/register/?(\w+)/?$", "register", ("POST",)],
-        ["account/login/?(\w+)/?$", "login", ("POST",)],
+        ["account/login/?$", "login", ("POST",)],
         ["account/validate/?$", "validate", ("POST",)],
         ["account/recover/?$", "recover", ("POST",)],
         ["account/register/resend/?$", "register_resend", ("POST",)],
@@ -205,7 +205,7 @@ class AccountHandler(APIHandler):
         Required("email"): All(unicode, Strip, Email, Lower,),
         Required("password"): All(unicode, Strip, Length(6, 64)),
     })
-    def login(self, input):
+    def login(self):
         account = db.Account.get_one(email=self.form.email, api_pk=self.api.pk)
         if not account:
             raise errors.EmailOrPasswordNotFoundError
@@ -222,13 +222,12 @@ class AccountHandler(APIHandler):
         auth_provider.discard_client_user_tokens(account.api.client_id, account.pk)
         auth_provider.set_user_logged(logged_in=True, acc_id=account.pk)
 
-        self.render('welcome.html', username=self.form.email)
+        self.write_resp(account.to_dict())
 
     @Validation({
         Required("email"): All(unicode, Strip, Email, Lower,),
         Required("password"): All(unicode, Strip, Length(6, 64)),
-        Required("password2"): All(unicode, Strip, Length(6, 64)),
-        Required("fullname"): All(unicode, Strip),
+        Required("fullname"): All(unicode, Strip, Length(2, 64)),
         Required("industry"): All(unicode, Strip),
         Optional("phone"): All(unicode, Strip),
         Optional("jobTitle"): All(unicode, Strip),
@@ -239,8 +238,10 @@ class AccountHandler(APIHandler):
         fullname = self.form.fullname
         email = self.form.email
         password = self.form.password
-        password2 = self.form.password2
         industry = self.form.industry
+
+        if input not in db.AccountRoles.values():
+            raise errors.InvalidRoleError
 
         if input != db.AccountRoles.Talent:
             phone = self.form.phone
@@ -262,12 +263,12 @@ class AccountHandler(APIHandler):
         company = self.config.site_settings[self.api.site]["company"]
         sender = self.config.site_settings[self.api.site]["email"]["registration"]
 
+        self.write_resp()
+
         send_user_email(self, sender=sender, recipients=user.email, site=self.api.site,
                             vhash=user.verify.vhash, action="validate",
                             path=self.config.action_path["validate"], host=self.config.site_settings[self.api.site]["host"],
                             subject="%s Account Registration Confirmation" % company)
-
-        self.render('welcome.html', username=fullname)
 
 
     @Validation({

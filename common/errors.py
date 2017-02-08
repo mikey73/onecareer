@@ -233,6 +233,11 @@ class AccountNotFoundError(AccountError):
     log_message = "Account not found"
 
 
+class InvalidRoleError(AccountError):
+    error_code = 1400
+    log_message = "Invalid role"
+
+
 # permission errors
 class PermissionError(APIError):
     error_code = 2100
