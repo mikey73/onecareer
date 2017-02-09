@@ -62,11 +62,11 @@ class AuthorizationProvider(_AuthorizationProvider):
         return tok
 
     def validate_client_id(self, client_id):
-        from models.api import API
+        from models import API
         return API.check_exist(client_id=client_id, is_active=True)
 
     def validate_client_secret(self, client_id, client_secret):
-        from models.api import API
+        from models import API
         return API.check_exist(client_id=client_id, client_secret=client_secret, is_active=True)
 
     def validate_scope(self, client_id, scope):

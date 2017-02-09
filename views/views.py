@@ -1,5 +1,7 @@
-from basehandlers import BaseHandler
-
+# coding: utf-8
+from basehandlers import BaseHandler,AuthRequiredViewHandler
+import models as db
+from common import errors
 
 class ViewHandler(BaseHandler):
     url_patterns = (
@@ -9,7 +11,6 @@ class ViewHandler(BaseHandler):
         ["about/?$", "about", ("GET",)],
         ["login/?$", "login", ("GET",)],
         ["signup/?$", "signup", ("GET",)],
-        ["welcome/?$", "welcome", ("POST",)],
         ["verify/?([0-9a-zA-z]*)/?$", "verify", ("GET",)],
     )
 
@@ -28,9 +29,21 @@ class ViewHandler(BaseHandler):
     def signup(self):
         self.render('signup.html')
 
-    def welcome(self):
-         info = self.get_argument('info')
-         self.render('welcome.html', info=info)
-
     def verify(self, vhash=None):
         self.render('verify.html', vhash=vhash)
+
+
+class AuthViewHandler(AuthRequiredViewHandler):
+    """ SettingsHandler, all actions are auth required """
+    url_patterns = (
+        # pattern,     action name,  HTTP method(s)
+        ["welcome/?$", "welcome", ("GET", "POST")],
+    )
+
+    def welcome(self):
+        try:
+            account = self.get_cur_account()
+            account_info = account.to_dict()
+            self.render("welcome.html", account_info=account.fullname)
+        except errors.AccountPermissionError:
+            self.render('login.html')

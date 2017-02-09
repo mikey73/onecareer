@@ -453,6 +453,47 @@ class AuthRequiredHandler(APIHandler):
             raise errors.AccountPermissionError
 
 
+class AuthRequiredViewHandler(BaseHandler):
+    _api_required_ = False
+
+    """ AuthRequiredHandler, auth info required for all request """
+    def __init__(self, *args, **kwargs):
+        super(AuthRequiredViewHandler, self).__init__(*args, **kwargs)
+        self.auth = None
+
+    def prepare(self):
+        """ check auth info, raise AuthError if failed """
+        try:
+            # try to load api
+            super(AuthRequiredViewHandler, self).prepare()
+        except errors.APIKeyError:
+            if self._api_required_:
+                raise
+            # ignore error in load_api
+
+        auth = load_auth(self)
+        if auth and auth.is_oauth:
+            self.auth = auth
+        else:
+            raise errors.AuthError
+
+    def get_cur_account(self, **filters):
+        """ get account bind to auth.acc_id from database,
+        is_active and is_valid must be True
+        :param filters: ext filters for DB search
+        :return: current account
+        :raise: errors.AccountPermissionError
+        """
+        import models as db
+        try:
+            return db.Account.get_and_check(pk=self.auth.acc_id,
+                                            is_active=True,
+                                            is_valid=True,
+                                            **filters)
+        except errors.APIError:
+            raise errors.AccountPermissionError
+
+
 def required_auth(method):
     """ decorator for OAuth2 authorization,
     add `auth` to handler if passed, it's an instance of ResourceAuthorization

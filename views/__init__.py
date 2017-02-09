@@ -1,1 +1,1 @@
-from .views import ViewHandler
+from .views import ViewHandler,AuthViewHandler

@@ -7,7 +7,7 @@ from common.compat import json
 
 import models as db
 from basehandlers import required_auth
-from basehandlers import APIHandler, JSONHandler
+from basehandlers import APIHandler, JSONHandler, AuthRequiredHandler
 from tools.validate import *
 from tools.auth import AuthorizationProvider
 
@@ -360,3 +360,32 @@ class AccountHandler(APIHandler):
         send_user_email(self, sender=sender, recipients=account.email, site=self.api.site,
                         msg="You've successfully changed your password.",
                         subject="%s Account Password Reset Success" % company)
+
+
+class AccountInfoHandler(AuthRequiredHandler):
+    """ SettingsHandler, all actions are auth required """
+    url_patterns = (
+        # pattern,     action name,  HTTP method(s)
+        ["account/update/?$", "update", ("POST",)],
+    )
+
+    @Validation({
+        Optional("fullname"): All(unicode, Strip),
+        Optional("phone"): All(unicode, Strip),
+        Optional("role"): All(unicode, Strip),
+        Optional("industry"): All(unicode, Strip),
+    })
+    def update(self):
+        if not self.form:
+            self.write_resp()
+            return
+
+        account = self.get_cur_account()
+        account.update_settings(**self.form)
+        account.save(commit=True)
+
+        self.conn.cache.user_flags.delete(account.pk)
+
+        settings = account.get_settings()
+
+        self.write_resp(settings)

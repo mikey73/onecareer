@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <!-- saved from url=(0044)http://www.qv12197932.icoc.me/col.jsp?id=112 -->
 <html xmlns="http://www.w3.org/1999/xhtml" class="g_html"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript" src={{ static_url("js/jquery-core.min.js") }}></script>
-<script type="text/javascript" src={{ static_url("js/jquery-mousewheel.min.js") }}></script>
-<script type="text/javascript" src={{ static_url("js/fai.min.js") }}></script>
-<script type="text/javascript" src={{ static_url("js/jquery-ui-core.min.js") }}></script>
-<script type="text/javascript" src={{ static_url("js/site.min.js") }}></script>
-<script type="text/javascript" src={{ static_url("js/2052.min.js") }}></script>
-<script type="text/javascript" src={{ static_url("js/ZeroClipboard.min.js") }}></script>
+<script type="text/javascript" src="{{ static_url('js/jquery-core.min.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('js/jquery-mousewheel.min.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('js/fai.min.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('js/jquery-ui-core.min.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('js/site.min.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('js/2052.min.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('js/ZeroClipboard.min.js') }}"></script>
 
 <title>THE ONE CAREER | 轻松学习，高薪就业！</title>
 
@@ -41,8 +41,8 @@
 
 
 
-<link type="text/css" href={{ static_url("css/base2.min.css")}} rel="stylesheet">
-<link type="text/css" href={{ static_url("css/fkTheme.min.css")}} rel="stylesheet" id="jzThemeFrame">
+<link type="text/css" href="{{ static_url('css/base2.min.css') }}" rel="stylesheet">
+<link type="text/css" href="{{ static_url('css/fkTheme.min.css') }}" rel="stylesheet" id="jzThemeFrame">
 <style type="text/css">
 .button{
 width: 95%;
@@ -82,7 +82,7 @@ border-radius: .5em;
 </style>
 
 
-<link type="text/css" href={{ static_url("css/poshytipAndmCustomScrollbar.min.css")}} rel="stylesheet">
+<link type="text/css" href="{{ static_url('css/poshytipAndmCustomScrollbar.min.css') }}" rel="stylesheet">
 
 
 
@@ -155,7 +155,7 @@ border-radius: .5em;
 
 
 
-<link rel="stylesheet" type="text/css" href={{ static_url("css/bannerAnimation.min.css") }}><style type="text/css" id="stylebacktotop">.fk_siteBackToTop{display:none;}
+<link rel="stylesheet" type="text/css" href="{{ static_url('css/bannerAnimation.min.css') }}"><style type="text/css" id="stylebacktotop">.fk_siteBackToTop{display:none;}
 .fk_siteBackToTop{width:41px;}
 .fk_siteBackToTop{height:38px;}
 .fk_siteBackToTop{cursor:pointer;}
@@ -290,7 +290,7 @@ border-radius: .5em;
 <td class="itemRight"></td>
 </tr>
 </tbody></table>
-<div class="itemSep"></div><table title="" class="item itemCol18 itemIndex5" cellpadding="0" cellspacing="0" colid="18" id="nav18"onclick="window.open(&quot;/login&quot;, &quot;_self&quot;)" _jump="window.open(&quot;/login&quot;, &quot;_self&quot;)">
+<div class="itemSep"></div><table title="" class="item itemCol18 itemIndex5" cellpadding="0" cellspacing="0" colid="18" id="nav18" onclick="window.open(&quot;/login&quot;, &quot;_self&quot;)" _jump="window.open(&quot;/login&quot;, &quot;_self&quot;)">
 <tbody><tr>
 <td class="itemLeft"></td>
 <td class="itemCenter"><a hidefocus="true" style="outline:none;" href="/login" target="_self" onclick="return false;"><span class="itemName0">登录</span></a></td>
@@ -378,7 +378,7 @@ border-radius: .5em;
 <div class="formMiddleContent formMiddleContent520" tabstyle="0" style="height: 242px; overflow-y: hidden;">
 <div class="floatImg floatImg_J"><a hidefocus="true" class="J_floatImg_jump">
 <div class="floatImgWrap">
-<img id="float_img_520" class="float_in_img J_defImage" src={{ static_url("images/ABUIABACGAAgiKjVxAUozq_7gQEw0gE4lgI.jpg")}} style=" height:220px; width:180px;">
+<img id="float_img_520" class="float_in_img J_defImage" src="{{ static_url('images/ABUIABACGAAgiKjVxAUozq_7gQEw0gE4lgI.jpg') }}" style=" height:220px; width:180px;">
 </div></a>
 </div></div>
 </td>
@@ -420,7 +420,6 @@ One Career会员登录
 <td class="formMiddleLeft formMiddleLeft517"></td>
 <td class="formMiddleCenter formMiddleCenter517 " valign="top">
 <div class="formMiddleContent formMiddleContent517 fk-formContentOtherPadding" tabstyle="0">
-<form id="form-memberLogin" action="" method="post">
 <div class="J_memberLoginPanel memberLoginPanel member">
 <div class="memberLoginItemList">
 <div class="J_memberLoginItem memberLoginItem itemSpace">
@@ -444,7 +443,7 @@ One Career会员登录
 <a class="regAcct" hidefocus="true" href="/signup"><font color="#FF6347">免费注册&gt;</font></a>
 </div>
 </div>
-</form>
+
 <div class="memberMsg"></div>
 </div>
 </td>
@@ -579,14 +578,16 @@ One Career会员登录
 
 
 
-
+<form id="form-memberLogin" action="/welcome" method="post">
+<input type="hidden" id="access_token" name="access_token" value=""/>
+<button type="submit" id="submitBtn" style="display:none;"/>
+</form>
 
 
 
 
 
 <script type="text/javascript">
-
 function checkinfo(){
 
 			var password = $('#password').val();
@@ -633,34 +634,51 @@ function ajax_post(){
 	email:$('#email').val(),
 	password:$('#password').val(),
   },
-  function(data){
-    //$('#msg').html("please enter the email!");
-	//$('#info').html(data);
-	var obj = jQuery.parseJSON(data);
-	if (obj.status == "ok"){
-	StandardPost("/welcome",{info:'欢迎'+obj.response.fullname+'!'})
+  function(data1){
+	var obj1 = jQuery.parseJSON(data1);
+	if (obj1.status == "ok"){
+	$.post("/api/v1/oauth2/auth",
+	  {
+		email:$('#email').val(),
+		password:$('#password').val(),
+	  },
+	  function(data2){
+		var obj2 = jQuery.parseJSON(data2);
+		if (obj2.status == "ok"){
+		$.post("/api/v1/oauth2/token",
+		  {
+			code: obj2.response.code[0],
+			grant_type: "authorization_code",
+		  },
+		  function(data3){
+			var obj3 = jQuery.parseJSON(data3);
+			if (obj3.status == "ok"){
+			$('#access_token').val(obj3.response.access_token);
+			$('#submitBtn').click();
+			return;
+			}
+			else{
+			document.getElementById('info').innerHTML = obj3.message;
+			}
+			//alert(data);
+		  },
+		  "text");//这里返回的类型有：json,html,xml,text
+		}
+		else{
+		document.getElementById('info').innerHTML = obj2.message;
+		}
+		//alert(data);
+	  },
+	  "text");//这里返回的类型有：json,html,xml,text
 	}
 	else{
-	document.getElementById('info').innerHTML = obj.message;
+	document.getElementById('info').innerHTML = obj1.message;
 	}
     //alert(data);
   },
   "text");//这里返回的类型有：json,html,xml,text
 }
 
-function StandardPost (url,args) 
-    {
-        var form = $("<form method='post'></form>");
-        form.attr({"action":url});
-        for (arg in args)
-        {
-            var input = $("<input type='hidden'>");
-            input.attr({"name":arg});
-            input.val(args[arg]);
-            form.append(input);
-        }
-        form.submit();
-    }
 
 function showYuanDanWindow(){
 	var hasShowYuanDanLuckyGuy = $.cookie("hasShowYuanDanLuckyGuy",{path:"/"});
@@ -721,8 +739,8 @@ function showYuanDanWindow(){
 
 	
 
-<link type="text/css" href={{ static_url("css/login.min.css")}} rel="stylesheet">
-<link type="text/css" href={{ static_url("css/fontsIco.min.css")}} rel="stylesheet">
+<link type="text/css" href="{{ static_url('css/login.min.css') }}" rel="stylesheet">
+<link type="text/css" href="{{ static_url('css/fontsIco.min.css') }}" rel="stylesheet">
 
 
 

@@ -1,1 +1,1 @@
-from .user import NonAuthHandler, AuthHandler, AccountHandler
+from .user import NonAuthHandler, AuthHandler, AccountHandler, AccountInfoHandler
