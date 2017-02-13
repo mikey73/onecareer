@@ -420,10 +420,11 @@ One Career会员登录
 <td class="formMiddleLeft formMiddleLeft517"></td>
 <td class="formMiddleCenter formMiddleCenter517 " valign="top">
 <div class="formMiddleContent formMiddleContent517 fk-formContentOtherPadding" tabstyle="0">
+<form id="form-memberLogin" action="/login" method="post">
 <div class="J_memberLoginPanel memberLoginPanel member">
 <div class="memberLoginItemList">
 <div class="J_memberLoginItem memberLoginItem itemSpace">
-<label id="info" style="color:red;" value=""></label>
+<label id="info" style="color:red;" value="">{{info}}</label>
 </div>
 <div class="J_memberLoginItem memberLoginItem itemSpace">
 <input id="email" name="email" class="generateInput memberAcctInput" type="email" placeholder="电子邮箱" required />
@@ -431,9 +432,10 @@ One Career会员登录
 <div class="J_memberLoginItem memberLoginItem itemSpace">
 <input id="password" name="password" class="generateInput memberPwdInput" type="password" placeholder="密码" onkeydown="if (Fai.isEnterKey(event)){Site.memberLogin1(517);}" required />
 </div>
+{% module xsrf_form_html() %}
 <div class="row">
             <div class="col-xs-12 col-md-12">
-              <button class="button" type="button" onclick="checkinfo()">登录</button>
+			  <button class="button" type="submit">登录</button>
             </div>
 </div>
 </div>
@@ -443,7 +445,7 @@ One Career会员登录
 <a class="regAcct" hidefocus="true" href="/signup"><font color="#FF6347">免费注册&gt;</font></a>
 </div>
 </div>
-
+</div>
 <div class="memberMsg"></div>
 </div>
 </td>
@@ -588,97 +590,6 @@ One Career会员登录
 
 
 <script type="text/javascript">
-function checkinfo(){
-
-			var password = $('#password').val();
-			
-			document.getElementById('info').innerHTML = '';
-			
-			if (checkSubmitEmail()==false){
-				return false;
-			}
-			
-			if (password.replace(/(^s*)|(s*$)/g, "").length ==0) { 
-				document.getElementById('info').innerHTML = '密码不能为空！'; 
-				return false;
-			}
-			
-			if (password.replace(/(^s*)|(s*$)/g, "").length < 6) { 
-				document.getElementById('info').innerHTML = '密码长度至少为6位！'; 
-				return false;
-			}
-			
-			ajax_post();
-}
-
-//jquery验证邮箱 
-function checkSubmitEmail() { 
-	if ($("#email").val() == "") { 
-	//$("#confirmMsg").html("<font color='red'>邮箱地址不能为空！</font>"); 
-	document.getElementById('info').innerHTML = '邮箱不能为空!';
-	$("#email").focus(); 
-	return false; 
-	} 
-	if (!$("#email").val().match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)) { 
-	document.getElementById('info').innerHTML = '邮箱格式不正确!';
-	//$("#confirmMsg").html("<font color='red'>邮箱格式不正确！请重新输入！</font>"); 
-	$("#email").focus(); 
-	return false; 
-	} 
-	return true; 
-}
-
-function ajax_post(){
-  $.post("/api/v1/account/login",
-  {
-	email:$('#email').val(),
-	password:$('#password').val(),
-  },
-  function(data1){
-	var obj1 = jQuery.parseJSON(data1);
-	if (obj1.status == "ok"){
-	$.post("/api/v1/oauth2/auth",
-	  {
-		email:$('#email').val(),
-		password:$('#password').val(),
-	  },
-	  function(data2){
-		var obj2 = jQuery.parseJSON(data2);
-		if (obj2.status == "ok"){
-		$.post("/api/v1/oauth2/token",
-		  {
-			code: obj2.response.code[0],
-			grant_type: "authorization_code",
-		  },
-		  function(data3){
-			var obj3 = jQuery.parseJSON(data3);
-			if (obj3.status == "ok"){
-			$('#access_token').val(obj3.response.access_token);
-			$('#submitBtn').click();
-			return;
-			}
-			else{
-			document.getElementById('info').innerHTML = obj3.message;
-			}
-			//alert(data);
-		  },
-		  "text");//这里返回的类型有：json,html,xml,text
-		}
-		else{
-		document.getElementById('info').innerHTML = obj2.message;
-		}
-		//alert(data);
-	  },
-	  "text");//这里返回的类型有：json,html,xml,text
-	}
-	else{
-	document.getElementById('info').innerHTML = obj1.message;
-	}
-    //alert(data);
-  },
-  "text");//这里返回的类型有：json,html,xml,text
-}
-
 
 function showYuanDanWindow(){
 	var hasShowYuanDanLuckyGuy = $.cookie("hasShowYuanDanLuckyGuy",{path:"/"});

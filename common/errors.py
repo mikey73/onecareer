@@ -12,7 +12,7 @@ class APIError(Exception):
             self.log_message = message
 
     def __str__(self):
-        return "(%d: %s)" % (self.error_code, self.log_message)
+        return "%s" % self.log_message
 
 
 class TornadoError(APIError):

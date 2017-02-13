@@ -1,13 +1,16 @@
 # coding: utf-8
-
-import apis, views
-from basehandlers import get_url_patterns, IndexHandler
-
+from apis.apis import *
+from views.views import *
 
 # gather url_patterns from modules
-url_patterns = []
-url_patterns += get_url_patterns(prefix="/", module=views)
-url_patterns += get_url_patterns(prefix="/api/v1/", module=apis)
-
-# add default error handler at the end
-url_patterns.append((".*", IndexHandler))
+url_patterns = [
+    (r"/", IndexHandler),
+    (r"/mentors", MentorsHandler),
+    (r"/course", CourseHandler),
+    (r"/about", AboutHandler),
+    (r'/signup', SignupHandler),
+    (r'/verify/([0-9a-zA-z]*)', VerifyHandler),
+    (r'/login', LoginHandler),
+    (r'/logout', LogoutHandler),
+    (r"/welcome", WelcomeHandler),
+]

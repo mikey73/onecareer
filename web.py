@@ -40,7 +40,7 @@ class Application(tornado.web.Application):
         models.drop_all(self.conn.db_engine)
         models.create_all(self.conn.db_engine)
 
-        api, user = models.init_debug_data()
+        user = models.init_debug_data()
         self.conn.cache.user_flags.delete(user.pk)    # remove cache
 
 

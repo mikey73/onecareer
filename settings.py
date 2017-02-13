@@ -60,4 +60,5 @@ settings["debug"] = options.debug
 settings["static_path"] = STATIC_ROOT
 settings["cookie_secret"] = options.cookie_secret
 settings["xsrf_cookies"] = options.xsrf_cookies
+settings["login_url"] = options.login_url
 settings["template_loader"] = tornado.template.Loader(TEMPLATE_ROOT)

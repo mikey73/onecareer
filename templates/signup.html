@@ -463,35 +463,37 @@ One Career会员注册</span></div>
 <table class="memberSignup jz-memberSignup" cellpadding="6px" cellspacing="6px">
 <tbody>
 
-<form id="form-memberSignup" action="" method="post">
+<form id="form-memberSignup" action="/signup" method="post" onsubmit="return checkinfo()">
 <tr>
 <td class="itemName"><div class="itemSpace"><span></span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><label id="info" style="color:red;" value=""></label></div></td>
+<td class="itemCtrl"><div class="itemSpace"><label id="info" style="color:red;" value="">{{info}}</label></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>姓名：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input id="fullname" type="text" maxlength="50" placeholder="First and last name" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input id="fullname" name="fullname" type="text" maxlength="50" placeholder="First and last name" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" />&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>邮箱：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input id="email" type="email" maxlength="50" placeholder="you@example.com" class="g_itext itemEdit userAddItem" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input id="email" name="email" maxlength="50" placeholder="you@example.com" class="g_itext itemEdit userAddItem" style="width:200px;height:25px;" />&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>密码：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" placeholder="Create password" id="password" onkeyup="KeyUp()" maxlength="20" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input type="password" name="password" class="g_itext itemEdit" placeholder="Create password" id="password" onkeyup="KeyUp()" maxlength="20" style="width:200px;height:25px;" />&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>确认密码：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" placeholder="Confirm password" id="password2" onkeyup="KeyUp()" maxlength="20" style="width:200px;height:25px;" required/>&nbsp;<font class="g_stress">*</font></div></td>
+<td class="itemCtrl"><div class="itemSpace"><input type="password" class="g_itext itemEdit" placeholder="Confirm password" id="password2" onkeyup="KeyUp()" maxlength="20" style="width:200px;height:25px;" />&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>会员角色：</span></div></td>
 <td class="itemCtrl"><div class="itemSpace"><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I0" name="role" value="Talent" checked="checked"><label for="M543F3siteFormCheckbox5I0">求职者</label></div><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I1" name="role" value="Mentor"><label for="M543F3siteFormCheckbox5I1">导师</label></div><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I1" name="role" value="HR"><label for="M543F3siteFormCheckbox5I1">HR</label></div></div></td>
 </tr>
 <tr>
-<td class="itemName"></td>
+<td class="itemName">
+{% module xsrf_form_html() %}
+</td>
 <td class="itemCtrl">
-<button class="button" type="button" id="submit" onclick="checkinfo()">注册</button>
+<button class="button" type="submit" id="submit">注册</button>
 </td>
 </tr>
 </form>
@@ -686,8 +688,6 @@ function checkinfo(){
 				 document.getElementById('info').innerHTML = '两次输入密码不一致!';//通过id获取label,修改值
 				 return false;
              }
-
-			ajax_post();
 }
 
 //jquery验证邮箱 
@@ -705,39 +705,6 @@ function checkSubmitEmail() {
 	return false; 
 	} 
 	return true; 
-}
-
-function ajax_post(){
-	var role='';
-	var val=$('input:radio[name="role"]:checked').val();
-            if(val==null){
-                alert("请至少选择一个角色!");
-                return false;
-            }
-            else{
-                role=val;
-            }
-			
-  $.post("/api/v1/account/register",
-  {
-	email:$('#email').val(),
-	password:$('#password').val(),
-	fullname:$('#fullname').val(),
-	role:role,
-  },
-  function(data){
-    //$('#msg').html("please enter the email!");
-	//$('#info').html(data);
-	var obj = jQuery.parseJSON(data);
-	if (obj.status == "ok"){
-	document.getElementById('info').innerHTML = "注册成功，请点击确认邮件中链接激活账号！";
-	}
-	else{
-	document.getElementById('info').innerHTML = obj.message;
-	}
-    //alert(data);
-  },
-  "text");//这里返回的类型有：json,html,xml,text
 }
 
 function showYuanDanWindow(){

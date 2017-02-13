@@ -572,12 +572,12 @@
 <div class="formMiddleContent formMiddleContent475 fk-formContentOtherPadding" tabstyle="0">
 <div>
 <div class="newsList J_newsList  newsNewModuleStyle_two " id="newsList475" _showsetting="0" newslisttype="4" scroll="0">
-<div topclassname="top1" topswitch="on" newsid="6" newsname="" class="J_newsListLine line noHover g_item   fk-newsLineHeight   " style="animation: none;"><div class="J_newsCalendar newsCalendar fk-newsCalendar-dym">
-<div class="fk-newsListDate fk-newsListDate-part1" id="verticalStyleDay"><label id=date2 value=""></label></div><div class="fk-newsListDate fk-newsListDate-part2" id="verticalStyleYearandMonth"><label id=date1 value=""></label></div>
+<div topclassname="top1" topswitch="on" newsid="6" newsname="2015年度教育关键词盘点：乡村教师备受关注..." class="J_newsListLine line noHover g_item   fk-newsLineHeight   " style="animation: none;"><div class="J_newsCalendar newsCalendar fk-newsCalendar-dym">
+<div class="fk-newsListDate fk-newsListDate-part1" id="verticalStyleDay"><label id=date2 value=""></label></div><div class="fk-newsListDate fk-newsListDate-part2" id="verticalStyleYearandMonth"><label id=date1 value=""></label></div><a class="fk-newsCalendar-link" hidefocus="true" href="" target="_blank"></a>
 </div>
 <div id="lineBody6" class="J_lineBody lineBody" style="width: 1086px;"><div class="J_newsTitle newsTitle" style="display: inline-block; width: 100%;">
 <div class="J_newsListTopFlag "></div>
-<font class="fk-newsListTitle" ><label id="info" value=""></label></font>
+<font class="fk-newsListTitle" >{{info}}</font>
 </div></div></div>
 <div class="J_separatorLine separatorLine g_separator " style="visibility: hidden; animation: none;"></div>
 <div class="clearfloat"></div>
@@ -912,26 +912,11 @@ window.onload = function() {
     if (strDate >= 0 && strDate <= 9) {
         day = "0" + strDate;
     }
+	else {
+		day = strDate;
+	}
     document.getElementById('date1').innerHTML = year+'/'+month;
 	document.getElementById('date2').innerHTML = day;
-	
-$.post("/api/v1/account/validate",
-  {
-	vhash:"{{vhash}}",
-  },
-  function(data){
-    //$('#msg').html("please enter the email!");
-	//$('#info').html(data);
-	var obj = jQuery.parseJSON(data);
-	if (obj.status == "ok"){
-	document.getElementById('info').innerHTML = "您的账号已激活，请点击登录！";
-	}
-	else{
-	document.getElementById('info').innerHTML = obj.message;
-	}
-    //alert(data);
-  },
-  "text");//这里返回的类型有：json,html,xml,text
 }; 
 
 
