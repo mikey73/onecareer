@@ -1,22 +1,22 @@
 # coding: utf-8
-import tornado.web
+from basehandlers import BaseHandler
 
 
-class IndexHandler(tornado.web.RequestHandler):
+class IndexHandler(BaseHandler):
     def get(self):
-        self.render('index.html')
+        self.render('index.html', is_login=self.is_login())
 
 
-class MentorsHandler(tornado.web.RequestHandler):
+class MentorsHandler(BaseHandler):
     def get(self):
-        self.render('mentors.html')
+        self.render('mentors.html', is_login=self.is_login())
 
 
-class CourseHandler(tornado.web.RequestHandler):
+class CourseHandler(BaseHandler):
     def get(self):
-        self.render('course.html')
+        self.render('course.html', is_login=self.is_login())
 
 
-class AboutHandler(tornado.web.RequestHandler):
+class AboutHandler(BaseHandler):
     def get(self):
-        self.render('about.html')
+        self.render('about.html', is_login=self.is_login())

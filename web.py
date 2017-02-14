@@ -14,6 +14,7 @@ from settings import settings, options
 from urls import url_patterns
 from tools.conn import Connections
 from tools.bg_tasks import BackgroundTasks
+import session
 
 
 class Application(tornado.web.Application):
@@ -22,6 +23,8 @@ class Application(tornado.web.Application):
         self.config = MagicDict(options.as_dict())
         self.conn = Connections(self.config)
         self.bg_tasks = BackgroundTasks(self.config, self.conn)
+        self.session_manager = session.SessionManager(self.config["session_secret"], self.conn.redis,
+                                                      self.config["session_timeout"])
         self.init_db()
 
     def init_db(self):
@@ -41,7 +44,7 @@ class Application(tornado.web.Application):
         models.create_all(self.conn.db_engine)
 
         user = models.init_debug_data()
-        self.conn.cache.user_flags.delete(user.pk)    # remove cache
+        self.conn.redis.flushall()
 
 
 if __name__ == '__main__':

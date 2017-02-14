@@ -425,12 +425,12 @@ One Career会员登录
 <input id="email" name="email" class="generateInput memberAcctInput" type="email" placeholder="电子邮箱" required />
 </div>
 <div class="J_memberLoginItem memberLoginItem itemSpace">
-<input id="password" name="password" class="generateInput memberPwdInput" type="password" placeholder="密码" onkeydown="if (Fai.isEnterKey(event)){Site.memberLogin1(517);}" required />
+<input id="password" name="password" class="generateInput memberPwdInput" type="password" placeholder="密码" onkeydown="KeyDown()" required />
 </div>
 {% module xsrf_form_html() %}
 <div class="row">
             <div class="col-xs-12 col-md-12">
-			  <button class="button" type="submit">登录</button>
+			  <button class="button" type="submit" id="btnSubmit">登录</button>
             </div>
 </div>
 </div>
@@ -585,6 +585,13 @@ One Career会员登录
 
 
 <script type="text/javascript">
+function KeyDown()
+{
+  if (event.keyCode == 13)
+  {
+    $('#btnsubmit').click();
+  }
+}
 
 function showYuanDanWindow(){
 	var hasShowYuanDanLuckyGuy = $.cookie("hasShowYuanDanLuckyGuy",{path:"/"});

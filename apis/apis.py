@@ -86,7 +86,10 @@ class LoginHandler(BaseHandler):
         if incorrect and int(incorrect) > 20:
             self.write('<center>blocked</center>')
             return
-        self.render('login.html', info="")
+        if self.current_user:
+            self.render('welcome.html', account_info=self.current_user)
+        else:
+            self.render('login.html', info="")
 
     @tornado.gen.coroutine
     def post(self):
@@ -114,13 +117,13 @@ class LoginHandler(BaseHandler):
             self.render("login.html", info=str(e))
             return
 
-        self.set_secure_cookie("user", email)
+        self.session["user_info"] = email
+        self.session.save()
         self.set_secure_cookie("incorrect", "0")
-        self.render("welcome.html", account_info=email)
+        self.render("welcome.html", account_info=self.current_user)
 
 
 class LogoutHandler(BaseHandler):
     def get(self):
-        self.clear_cookie("user")
-        self.set_secure_cookie("user", "", expires=0)
-        self.redirect(self.get_argument("next", "/"))
+        self.session.clear()
+        self.redirect(self.get_argument("next", "/login"))

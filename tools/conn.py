@@ -37,22 +37,7 @@ class Connections(object):
         return global_session
 
     @cached_property
-    def redis_sync(self):
-        return redis.StrictRedis(host=self.config["redis_host"],
-                                 port=self.config["redis_port"],
-                                 password=self.config["redis_password"],
-                                 db=self.config["redis_db"])
-    redis = redis_sync
-
-    @cached_property
-    def redis_async(self):
-        return tornadoredis.Client(host=self.config["redis_host"],
-                                   port=self.config["redis_port"],
-                                   password=self.config["redis_password"],
-                                   selected_db=self.config["redis_db"])
-
-    @cached_property
-    def cache(self):
-        return Cache(self.redis_sync)
+    def redis(self):
+        return redis.StrictRedis(**self.config["redis_options"])
 
 

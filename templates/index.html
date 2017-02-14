@@ -1337,6 +1337,8 @@
 <td class="itemRight"></td>
 </tr>
 </tbody></table>
+
+{%if is_login==False %}
 <div class="itemSep"></div><table title="" class="item itemCol18 itemIndex5" cellpadding="0" cellspacing="0" colid="18" id="nav18" onclick="window.open(&quot;/login&quot;, &quot;_self&quot;)" _jump="window.open(&quot;/login&quot;, &quot;_self&quot;)">
 <tbody><tr>
 <td class="itemLeft"></td>
@@ -1344,6 +1346,22 @@
 <td class="itemRight"></td>
 </tr>
 </tbody></table>
+{%else%}
+<div class="itemSep"></div><table title="" class="item itemCol18 itemIndex5" cellpadding="0" cellspacing="0" colid="18" id="nav18" onclick="window.open(&quot;/welcome&quot;, &quot;_self&quot;)" _jump="window.open(&quot;/welcome&quot;, &quot;_self&quot;)">
+<tbody><tr>
+<td class="itemLeft"></td>
+<td class="itemCenter"><a hidefocus="true" style="outline:none;" href="/welcome" target="_self" onclick="return false;"><span class="itemName0">个人中心</span></a></td>
+<td class="itemRight"></td>
+</tr>
+</tbody></table>
+<div class="itemSep"></div><table title="" class="item itemCol18 itemIndex5" cellpadding="0" cellspacing="0" colid="19" id="nav19" onclick="window.open(&quot;/logout&quot;, &quot;_self&quot;)" _jump="window.open(&quot;/logout&quot;, &quot;_self&quot;)">
+<tbody><tr>
+<td class="itemLeft"></td>
+<td class="itemCenter"><a hidefocus="true" style="outline:none;" href="/logout" target="_self" onclick="return false;"><span class="itemName0">退出</span></a></td>
+<td class="itemRight"></td>
+</tr>
+</tbody></table>
+{%end%}
 </div>
 <div class="itemNext" style="display: none;"></div>
 </div>
@@ -3348,6 +3366,7 @@ var nav103SubMenu=[];
 var nav104SubMenu=[];
 var nav101SubMenu=[];
 var nav18SubMenu=[];
+var nav19SubMenu=[];
 var _customBackgroundData = {"styleDefault":true,"s":true,"h":false,"r":3,"o":"","sw":-1,"e":0,"wbh":-1,"wbw":-1,"clw":-1,"crw":-1,"id":"","p":"","bBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cmBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"bm":{},"cm":{},"cp":{"y":0}};          //自定义的数据
 var _templateBackgroundData = {"styleDefault":true,"s":true,"h":false,"r":3,"o":"","sw":-1,"e":0,"wbh":-1,"wbw":-1,"clw":-1,"crw":-1,"id":"","p":"","bBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cmBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"bm":{},"cm":{},"cp":{"y":0}};// 模版的数据
 var _useTemplateBanner = true;				// 是否使用全局模版

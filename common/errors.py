@@ -287,6 +287,10 @@ class S3BucketError(APIError):
     log_message = "An S3Bucket error occurred"
 
 
+class InvalidSessionError(APIError):
+    error_code = 2400
+    log_message = "Invalid Session Error"
+
 
 _locals = locals().copy()
 error_map = {e.error_code: e for e in _locals.values() if (isinstance(e, class_types) and

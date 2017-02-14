@@ -5,17 +5,15 @@ import types
 import weakref
 import functools
 import threading
-from functools import wraps
-from datetime import datetime
 
 from tornado.web import HTTPError
 from tornado.web import RequestHandler
 from tornado.stack_context import StackContext
+import session
 
 from common import errors
 from common.compat import (json, get_ident, string_types, class_types, iteritems)
-from common.mytypes import MagicDict, APIStatus
-from common.utils import json_dumps_default
+from common.mytypes import MagicDict
 
 from tools.log import app_log
 from tools.validate import Invalid
@@ -78,6 +76,7 @@ class BaseHandler(RequestHandler):
     def __init__(self, *args, **kwargs):
         self._form = None     # hold all flat arguments, instance of MagicDict
         super(BaseHandler, self).__init__(*args, **kwargs)
+        self.session = session.Session(self.application.session_manager, self)
 
     def _execute(self, transforms, *args, **kwargs):
         """ inject global data bind to current request """
@@ -86,7 +85,12 @@ class BaseHandler(RequestHandler):
             super(BaseHandler, self)._execute(transforms, *args, **kwargs)
 
     def get_current_user(self):
-        return self.get_secure_cookie("user")
+        return self.session.get("user_info")
+
+    def is_login(self):
+        if self.current_user:
+            return True
+        return False
 
     def get_cur_account(self, **filters):
         """ get account bind to auth.acc_id from database,
