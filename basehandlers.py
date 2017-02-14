@@ -9,10 +9,10 @@ import threading
 from tornado.web import HTTPError
 from tornado.web import RequestHandler
 from tornado.stack_context import StackContext
-import session
+from tools import session
 
 from common import errors
-from common.compat import (json, get_ident, string_types, class_types, iteritems)
+from common.compat import (get_ident, string_types, class_types, iteritems)
 from common.mytypes import MagicDict
 
 from tools.log import app_log

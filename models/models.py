@@ -15,7 +15,7 @@ class Account(Base, ModelMixin):
     _not_found_error_ = errors.AccountNotFoundError
     _protect_attrs_ = ["password", "verify"]
     _to_dict_attrs_ = ["pk", "fullname", "email", "joined",
-                       "is_active", "is_valid", "role"]
+                       "is_active", "is_valid", "role", "signup_source"]
 
     pk = sa.Column(sa.Integer, primary_key=True)
     fullname = sa.Column(sa.String, nullable=False)
@@ -25,16 +25,18 @@ class Account(Base, ModelMixin):
     is_active = sa.Column(sa.Boolean, nullable=False, default=True)
     is_valid = sa.Column(sa.Boolean, nullable=False, default=False)
     role = sa.Column(sa.Enum(*AccountRoles.values(), name="roles"), nullable=False)
+    signup_source = sa.Column(sa.Enum(*AccountSignupSource.values(), name="signup_sources"), nullable=False,
+                              default=AccountSignupSource.Site)
     verify = relationship("Verification", uselist=False, backref="account")
 
     @classmethod
-    def new(cls, email, password, fullname, role):
-        if cls.check_exist(email=email, role=role):
+    def new(cls, email, password, fullname, role, signup_source=AccountSignupSource.Site):
+        if cls.check_exist(email=email, signup_source=signup_source):
             raise errors.EmailExistsError
 
         new_verify = Verification()
         new_account = cls.create(email=email, password=password, fullname=fullname,
-                                 role=role, verify=new_verify)
+                                 role=role, signup_source=signup_source, verify=new_verify)
         new_account.set_password(password)
         new_verify.save(commit=False)
         new_account.save(commit=True)

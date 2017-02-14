@@ -14,7 +14,7 @@ from settings import settings, options
 from urls import url_patterns
 from tools.conn import Connections
 from tools.bg_tasks import BackgroundTasks
-import session
+from tools import session
 
 
 class Application(tornado.web.Application):

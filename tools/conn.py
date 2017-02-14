@@ -8,7 +8,7 @@ from common.mytypes import cached_property
 from common.tools.aws import AWSClient
 
 from .mail import EmailClient
-from .cache import Cache
+from common.tools.linkedin import LinkedinAPI
 
 
 class Connections(object):
@@ -39,5 +39,10 @@ class Connections(object):
     @cached_property
     def redis(self):
         return redis.StrictRedis(**self.config["redis_options"])
+
+    @cached_property
+    def linkedin_client(self):
+        return LinkedinAPI(self.config["linkedin_auth"]["client_id"],
+                           self.config["linkedin_auth"]["client_secret"])
 
 

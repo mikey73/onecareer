@@ -9,6 +9,8 @@ url_patterns = [
     (r"/course", CourseHandler),
     (r"/about", AboutHandler),
     (r'/signup', SignupHandler),
+    (r'/login/linkedin', LinkedinLoginHandler),
+    (r'/auth/linkedin', LinkedinAuthHandler),
     (r'/verify/([0-9a-zA-z]*)', VerifyHandler),
     (r'/login', LoginHandler),
     (r'/logout', LogoutHandler),

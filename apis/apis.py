@@ -4,6 +4,7 @@ import tornado.web
 import datetime
 from common import errors
 import models as db
+import json
 
 
 def send_user_email(handler, sender, recipients, subject, msg=None,
@@ -30,6 +31,46 @@ class WelcomeHandler(BaseHandler):
         self.render('welcome.html', account_info=self.current_user)
 
 
+class LinkedinLoginHandler(BaseHandler):
+    def get(self):
+        if self.current_user:
+            self.render('welcome.html', account_info=self.current_user)
+            return
+
+        l_api = self.conn.linkedin_client
+        authorization_url = l_api.request_authorization_url(self.config["linkedin_auth"]["redirect_url"])
+        self.redirect(authorization_url)
+
+
+class LinkedinAuthHandler(BaseHandler):
+    def get(self):
+        code = self.get_argument('code','')
+        l_api = self.conn.linkedin_client
+        access_token = l_api.request_access_token(self.config["linkedin_auth"]["redirect_url"], code)
+        query_params = {'access_token': access_token,
+                        'uri': self.config["linkedin_auth"]["uri"],
+                        'method': 'GET',
+                        'json_post_body': {},
+                        'api_type': 'api_people'
+                        }
+        data = json.loads(l_api.request_api(query_params))
+        fullname = data.get("formattedName","")
+        email = data.get("emailAddress","")
+        password = ""
+        role = db.AccountRoles.TBD
+        signup_source = db.AccountSignupSource.Linkedin
+        if not db.Account.check_exist(email=email, signup_source=signup_source):
+            user = db.Account.new(fullname=fullname,
+                                  email=email,
+                                  password=password,
+                                  role=role,
+                                  signup_source=signup_source)
+        self.session["user_info"] = email
+        self.session.save()
+        self.set_secure_cookie("incorrect", "0")
+        self.render("welcome.html", account_info=self.current_user)
+
+
 class SignupHandler(BaseHandler):
     def get(self):
         self.render('signup.html', info="")
@@ -44,7 +85,7 @@ class SignupHandler(BaseHandler):
             if role not in db.AccountRoles.values():
                 raise errors.InvalidRoleError
 
-            if db.Account.check_exist(email=email):
+            if db.Account.check_exist(email=email, signup_source=db.AccountSignupSource.Site):
                 raise errors.EmailExistsError
         except Exception, e:
             self.render("signup.html", info=str(e))
@@ -100,7 +141,7 @@ class LoginHandler(BaseHandler):
 
         email = self.get_argument("email")
         password = self.get_argument("password")
-        account = db.Account.get_one(email=email)
+        account = db.Account.get_one(email=email, signup_source=db.AccountSignupSource.Site)
         try:
             if not account:
                 raise errors.EmailOrPasswordNotFoundError

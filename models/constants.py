@@ -13,7 +13,8 @@ class AccountRoles(BaseStatus):
     Talent = "Talent"
     Mentor = "Mentor"
     HR = "HR"
+    TBD = "TBD"
 
-
-class APISites(BaseStatus):
-    Consult = "Consult"
+class AccountSignupSource(BaseStatus):
+    Site = "Site"
+    Linkedin = "Linkedin"
