@@ -50,10 +50,4 @@ class Cache(object):
         self.client = client
 
         # add all cache object here
-        self.user_flags = CacheProxy(self.client, "user_flags:%s")
-
-        self.book_info = CacheProxy(self.client, "book_info:%s:%s")
-
-        self.back_officer_ranges = CacheProxy(self.client, "bo_ranges:%s")
-
-        self.doc_progress = CacheProxy(self.client, "doc_progress:%s")
+        self.user_info = CacheProxy(self.client, "user_info:%s")

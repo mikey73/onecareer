@@ -9,6 +9,7 @@ from common.tools.aws import AWSClient
 
 from .mail import EmailClient
 from common.tools.linkedin import LinkedinAPI
+from tools.cache import Cache
 
 
 class Connections(object):
@@ -37,8 +38,17 @@ class Connections(object):
         return global_session
 
     @cached_property
-    def redis(self):
+    def redis_sync(self):
         return redis.StrictRedis(**self.config["redis_options"])
+    redis = redis_sync
+
+    @cached_property
+    def redis_async(self):
+        return tornadoredis.Client(**self.config["redis_options"])
+
+    @cached_property
+    def cache(self):
+        return Cache(self.redis_sync)
 
     @cached_property
     def linkedin_client(self):

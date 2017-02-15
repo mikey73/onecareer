@@ -14,7 +14,6 @@ from settings import settings, options
 from urls import url_patterns
 from tools.conn import Connections
 from tools.bg_tasks import BackgroundTasks
-from tools import session
 
 
 class Application(tornado.web.Application):
@@ -23,8 +22,6 @@ class Application(tornado.web.Application):
         self.config = MagicDict(options.as_dict())
         self.conn = Connections(self.config)
         self.bg_tasks = BackgroundTasks(self.config, self.conn)
-        self.session_manager = session.SessionManager(self.config["session_secret"], self.conn.redis,
-                                                      self.config["session_timeout"])
         self.init_db()
 
     def init_db(self):

@@ -15,4 +15,5 @@ url_patterns = [
     (r'/login', LoginHandler),
     (r'/logout', LogoutHandler),
     (r"/welcome", WelcomeHandler),
+    (r"/account/info", AccountInfoHandler),
 ]

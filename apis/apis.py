@@ -28,14 +28,13 @@ def send_user_email(handler, sender, recipients, subject, msg=None,
 class WelcomeHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        self.render('welcome.html', account_info=self.current_user)
+        self.render('welcome.html', account_info=self.current_user.fullname)
 
 
 class LinkedinLoginHandler(BaseHandler):
     def get(self):
         if self.current_user:
-            self.render('welcome.html', account_info=self.current_user)
-            return
+            self.redirect("/welcome")
 
         l_api = self.conn.linkedin_client
         authorization_url = l_api.request_authorization_url(self.config["linkedin_auth"]["redirect_url"])
@@ -59,16 +58,21 @@ class LinkedinAuthHandler(BaseHandler):
         password = ""
         role = db.AccountRoles.TBD
         signup_source = db.AccountSignupSource.Linkedin
-        if not db.Account.check_exist(email=email, signup_source=signup_source):
+        user = db.Account.get_one(email=email, signup_source=signup_source)
+        if not user:
             user = db.Account.new(fullname=fullname,
                                   email=email,
                                   password=password,
                                   role=role,
+                                  is_valid=True,
                                   signup_source=signup_source)
-        self.session["user_info"] = email
-        self.session.save()
-        self.set_secure_cookie("incorrect", "0")
-        self.render("welcome.html", account_info=self.current_user)
+        self.set_secure_cookie("user_pk", str(user.pk))
+        self.conn.cache.user_info.get_or_add(
+                key_args=user.pk,
+                data=user.get_settings(),
+                ex=3600
+        )
+        self.redirect("/welcome")
 
 
 class SignupHandler(BaseHandler):
@@ -76,10 +80,10 @@ class SignupHandler(BaseHandler):
         self.render('signup.html', info="")
 
     def post(self):
-        fullname = self.get_argument("fullname")
-        email = self.get_argument("email")
-        password = self.get_argument("password")
-        role = self.get_argument("role")
+        fullname = self.form.fullname
+        email = self.form.email
+        password = self.form.password
+        role = self.form.role
 
         try:
             if role not in db.AccountRoles.values():
@@ -128,7 +132,7 @@ class LoginHandler(BaseHandler):
             self.write('<center>blocked</center>')
             return
         if self.current_user:
-            self.render('welcome.html', account_info=self.current_user)
+            self.redirect("/welcome")
         else:
             self.render('login.html', info="")
 
@@ -139,8 +143,8 @@ class LoginHandler(BaseHandler):
             self.write('<center>blocked</center>')
             return
 
-        email = self.get_argument("email")
-        password = self.get_argument("password")
+        email = self.form.email
+        password = self.form.password
         account = db.Account.get_one(email=email, signup_source=db.AccountSignupSource.Site)
         try:
             if not account:
@@ -158,13 +162,42 @@ class LoginHandler(BaseHandler):
             self.render("login.html", info=str(e))
             return
 
-        self.session["user_info"] = email
-        self.session.save()
+        self.set_secure_cookie("user_pk", str(account.pk))
         self.set_secure_cookie("incorrect", "0")
-        self.render("welcome.html", account_info=self.current_user)
+        self.conn.cache.user_info.get_or_add(
+                key_args=account.pk,
+                data=account.get_settings(),
+                ex=3600
+        )
+        self.redirect("/welcome")
 
 
 class LogoutHandler(BaseHandler):
     def get(self):
-        self.session.clear()
+        user_pk = self.get_secure_cookie("user_pk")
+        if user_pk:
+            self.conn.cache.user_info.delete(user_pk)
+        self.clear_cookie("user_pk")
+        self.clear_cookie("incorrect")
         self.redirect(self.get_argument("next", "/login"))
+
+
+class AccountInfoHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        self.render('account_info.html',  info="", account_info=self.current_user)
+
+    @tornado.web.authenticated
+    def post(self):
+        account = self.get_cur_account()
+        account.update_settings(**self.form)
+        account.save(commit=True)
+
+        self.conn.cache.user_info.delete(account.pk)
+        self.conn.cache.user_info.get_or_add(
+                key_args=account.pk,
+                data=account.get_settings(),
+                ex=3600
+        )
+        self.render('account_info.html',  info="Personal info successfully saved.",
+                    account_info=self.get_current_user())
