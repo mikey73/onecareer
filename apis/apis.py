@@ -1,3 +1,4 @@
+# coding: utf-8
 import sys
 from basehandlers import BaseHandler
 import tornado.web
@@ -72,7 +73,7 @@ class LinkedinAuthHandler(BaseHandler):
                 data=user.get_settings(),
                 ex=3600
         )
-        self.redirect("/welcome")
+        self.redirect(self.get_argument("next", "/welcome"))
 
 
 class SignupHandler(BaseHandler):
@@ -169,7 +170,7 @@ class LoginHandler(BaseHandler):
                 data=account.get_settings(),
                 ex=3600
         )
-        self.redirect("/welcome")
+        self.redirect(self.get_next())
 
 
 class LogoutHandler(BaseHandler):
@@ -179,7 +180,7 @@ class LogoutHandler(BaseHandler):
             self.conn.cache.user_info.delete(user_pk)
         self.clear_cookie("user_pk")
         self.clear_cookie("incorrect")
-        self.redirect(self.get_argument("next", "/login"))
+        self.redirect("/login")
 
 
 class AccountInfoHandler(BaseHandler):
@@ -201,3 +202,47 @@ class AccountInfoHandler(BaseHandler):
         )
         self.render('account_info.html',  info="Personal info successfully saved.",
                     account_info=self.get_current_user())
+
+
+class WorkExperienceHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        data = []
+        work_experience = db.WorkExperience.get_work_experience_by_account(self.current_user.pk)
+        for item in work_experience:
+            data.append(item.to_dict())
+        data = json.dumps(data).encode("utf-8")
+        data = json.loads(data)
+        self.render('work_experience.html',  info="", work_experience=data)
+
+    @tornado.web.authenticated
+    def post(self):
+        data = json.loads(self.form.data.encode("utf-8"))
+        w_pk = []
+        work_experience = db.WorkExperience.get_work_experience_by_account(self.current_user.pk)
+        for item in work_experience:
+            w_pk.append(item.pk)
+        for item in data:
+            item["account_pk"] = self.current_user.pk
+            work_experience = db.WorkExperience.get_one(pk=item["pk"])
+            if work_experience:
+                if item["pk"] in w_pk:
+                    w_pk.remove(item["pk"])
+                item.pop("pk")
+                work_experience.update(commit=False, **item)
+            else:
+                item.pop("pk")
+                work_experience = db.WorkExperience.create(**item)
+                work_experience.save(commit=False)
+
+        for pk in w_pk:
+            work_experience = db.WorkExperience.get_one(pk=pk)
+            work_experience.delete(commit=False)
+
+        db.cur_session().commit()
+
+        data = []
+        work_experience = db.WorkExperience.get_work_experience_by_account(self.current_user.pk)
+        for item in work_experience:
+            data.append(item.to_dict())
+        self.render('work_experience.html',  info="Work experience successfully saved.", work_experience=data)

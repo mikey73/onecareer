@@ -269,7 +269,7 @@ background: linear-gradient(top,#70bfef,#4097ce);
 	
 <div class="imageSwitchShowName photoSwitchBg" style="position: absolute; display: none; z-index: 2; width: 1349px; height: 30px; line-height: 30px; top: 768px; left: 0px;"><span class="spanHiddenName spanShowName" style="margin-left: 10px;"></span><span class="spanHiddenName " style="margin-left: 10px;"></span></div><div></div><div class="switchGroup billboard billboard13 billboard2" style="width: 100%; position: relative; height: 768px; overflow: hidden; margin: 0px auto;">
 <div class="billboard_item arrowImg billboardItem_2 billboardAnim billboardItem_2_start" style="width: 1349px; height: 768px; animation-duration: 1500ms; display: block;">
-<a class="J_bannerItem" hidefocus="true" title="" href="javascript:;" target="" style="width: 1349px; height: 768px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1; background-image: url(&quot;../static/images/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY.jpg&quot;); background-position: 50% 50%; background-repeat: no-repeat;" onclick="return false;">
+<a class="J_bannerItem" hidefocus="true" title="" href="javascript:;" target="" style="width: 1349px; height: 450px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1; background-image: url(&quot;../static/images/AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM.jpg&quot;); background-position: 50% 50%; background-repeat: no-repeat;" onclick="return false;">
 </a>
 </div>
 <div class="billboard_item arrowImg billboardItem_2 billboardAnim" style="width: 1349px; height: 768px; animation-duration: 1500ms; display: none;">
@@ -502,7 +502,7 @@ One Career会员资料</span></div>
 </tr>
 <tr>
 <td class="itemName"><div class="itemSpace"><span>州名：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><select name="state" id="state" style="width:200px;height:25px;">
+<td class="itemCtrl"><div class="itemSpace"><select name="state" id="state" style="width:200px;height:28px;">
     <option value="Select">Select the state you are in</option>
     </select>&nbsp;<font class="g_stress">*</font></div></td>
 </tr>
@@ -671,7 +671,6 @@ window.onload = function() {
 	for (var key in USStates)
 	{
 		var str = "<option value='"+USStates[key]+"'>"+USStates[key]+"</option>";
-		console.log(str);
 		$("#state").append(str); 
 	}
 	$('#state').val("{{account_info.state}}");
@@ -698,9 +697,9 @@ function checkinfo(){
 			var city = $('#city').val()
 			var state = $('#state').val()
 			
-			if (fullname.replace(/(^s*)|(s*$)/g, "").length ==0) { 
+			if (fullname.replace(/(^\s*)|(\s*$)/g, "").length ==0) { 
 				document.getElementById('info').innerHTML = '姓名不能为空！'; 
-				document.getElementById('fullname').focus()
+				document.getElementById('fullname').focus();
 				return false;
 			}
 			
@@ -716,27 +715,28 @@ function checkinfo(){
             }
 			
 			if (checkSubmitPhone()==false){
-					document.getElementById('phone_num').focus()
+					document.getElementById('phone_num').focus();
 					return false;
 				}
 			
-			if (city.replace(/(^s*)|(s*$)/g, "").length ==0) { 
+			if (city.replace(/(^\s*)|(\s*$)/g, "").length ==0) { 
 				document.getElementById('info').innerHTML = '城市不能为空！'; 
-				document.getElementById('city').focus()
+				document.getElementById('city').focus();
 				return false;
 			}
 			
 			if (state == "Select") { 
 				document.getElementById('info').innerHTML = '州名不能为空！'; 
-				document.getElementById('state').focus()
+				document.getElementById('state').focus();
 				return false;
 			}
 }
 
 function checkSubmitPhone(){
 		var phone = $('#phone_num').val();
-		if (phone.replace(/(^s*)|(s*$)/g, "").length ==0) { 
+		if (phone.replace(/(^\s*)|(\s*$)/g, "").length ==0) { 
 				document.getElementById('info').innerHTML = '电话不能为空!';
+				document.getElementById('phone_num').focus();
 				return false;
 		}
 		for(ilen=0;ilen<phone.length;ilen++)
@@ -744,6 +744,7 @@ function checkSubmitPhone(){
 			if((phone.charAt(ilen) < '0' || phone.charAt(ilen) > '9') && (phone.charAt(ilen)!='-') )
 			{
 				document.getElementById('info').innerHTML = '非法的电话号码!';
+				document.getElementById('phone_num').focus();
 				return false;
 			}
 		}
@@ -908,7 +909,7 @@ $(function() {
 	//各个模块inc吐出脚本
 	Site.initCorpTitleJump();
 Site.initCorpTitleContent("primaryTitle", "<div style=\"\" class=\"newPrimaryTitle\"><span style=\"font-size: 30px;\"><b><font style=\"color: rgb(255, 255, 255);\" color=\"#ffffff\">THE ONE CAREER<\/font><\/b><\/span><\/div>", "pointer-events:none;");
-Site.initBanner({"_open":true,"data":[{"title":"","desc":"","imgWidth":1920,"imgHeight":768,"ot":0,"src":"{{ static_url('images/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY.jpg') }}","edgeLeft":"","edgeRight":""},{"title":"","desc":"","imgWidth":1920,"imgHeight":768,"ot":1,"src":"{{ static_url('images/AD0Iw_D2BRACGAAgy86SwwUo4tft6wUwgA84gAY.jpg') }}","edgeLeft":"","edgeRight":""}],"width":1920,"height":768,"playTime":4000,"animateTime":1500,"from":"banner","btnType":0,"wideScreen":false}, {"_open":false}, 4);
+Site.initBanner({"_open":true,"data":[{"title":"","desc":"","imgWidth":1920,"imgHeight":450,"ot":1,"src":"{{ static_url('images/AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM.jpg') }}","edgeLeft":"","edgeRight":""}],"width":1920,"height":450,"playTime":4000,"animateTime":1500,"from":"banner","btnType":1,"wideScreen":false}, {"_open":false}, 4);
 jzUtils.run({ "name": "ImageEffect.FUNC.BASIC.Init", "callMethod": true }, {"moduleId": 526, "imgEffOption": {"effType":1,"borderType":false,"borderColor":"#000","borderWidth":1,"borderStyle":1,"hoverPicPath":"http://0.ss.faisys.com/image/floatImgHoverDef.png","openHoverPic":false,"isFontIcon":false,"ishovFont":false,"hovFont":"faisco-icons-contact2","hovFontColor":"#222222","picPath":"http://12702975.s21i-12.faiusr.com/2/ABUIABACGAAg2q7VxAUooM-htgQwwgE4qwI.jpg","isInit":false}, "tagetOption": {"targetParent":"floatImg_J","target":"floatImg_J"}, "callback": Site.createImageEffectContent_photo, "callbackArgs": []});
 Site.initModuleMemberSignup(27, 1,false, "/index.jsp");
 
@@ -986,10 +987,10 @@ var nav18SubMenu=[];
 var nav19SubMenu=[];
 var _customBackgroundData = {"styleDefault":true,"s":true,"h":false,"r":3,"o":"","sw":-1,"e":0,"wbh":-1,"wbw":-1,"clw":-1,"crw":-1,"id":"","p":"","bBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cmBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"bm":{},"cm":{},"cp":{"y":0}};          //自定义的数据
 var _templateBackgroundData = {"id":"","bBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cmBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cp":{"y":0},"s":true,"h":false,"r":3,"o":"","sw":-1,"e":0,"wbh":-1,"wbw":-1,"clw":-1,"crw":-1,"p":"","bm":{},"cm":{}};// 模版的数据
-var _useTemplateBanner = true;				// 是否使用全局模版
+var _useTemplateBanner = false;				// 是否使用全局模版
 var _templateBannerData = {"l":[{"i":"AD0Iw_D2BRACGAAgy86SwwUo4tft6wUwgA84gAY","p":"{{ static_url('images/AD0Iw_D2BRACGAAgy86SwwUo4tft6wUwgA84gAY.jpg') }}","w":1920,"h":768,"tp":"http://12431427.s61i.faiusr.com/2/AD0Iw_D2BRACGAAgy86SwwUo4tft6wUwgA84gAY!100x100.jpg"},{"i":"AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY","p":"{{ static_url('images/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY.jpg') }}","w":1920,"h":768,"tp":"http://12431427.s61i.faiusr.com/2/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY!100x100.jpg"},{"i":"AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY","p":"{{ static_url('images/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY.jpg') }}","w":1920,"h":768,"tp":"http://12431427.s61i.faiusr.com/2/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY!100x100.jpg"},{"i":"AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY","p":"{{ static_url('images/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY.jpg') }}","w":1920,"h":768,"tp":"http://12431427.s61i.faiusr.com/2/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY!100x100.jpg"}],"n":[{"t":1,"i":"AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY","ot":0,"e":0,"u":"","p":"{{ static_url('images/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY.jpg') }}","w":1920,"h":768,"el":"","er":""},{"t":1,"i":"AD0Iw_D2BRACGAAgy86SwwUo4tft6wUwgA84gAY","ot":1,"e":0,"u":"","p":"{{ static_url('images/AD0Iw_D2BRACGAAgy86SwwUo4tft6wUwgA84gAY.jpg') }}","w":1920,"h":768,"el":"","er":""}],"ce":{},"s":4,"c":2,"pl":0,"bt":0,"at":13,"i":4000,"a":1500,"h":false,"o":false,"t":1,"p":0,"pt":0,"ws2":false,"f":{},"ws":false};		// 模版的数据
-var _pageBannerData = {"s":0,"i":4000,"a":1500,"h":false,"o":false,"t":1,"p":0,"pt":0,"pl":0,"bt":1,"ws2":false,"l":[],"f":{},"ce":{},"n":[],"c":3,"at":0,"ws":false};					// 当前页面的自定义数据（页面独立样式设置）
-var _bannerData = _templateBannerData;
+var _pageBannerData = {"l":[{"i":"AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM","p":"{{ static_url('images/AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM.jpg') }}","w":1920,"h":450,"tp":"http://12431427.s61i.faiusr.com/2/AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM!100x100.jpg"}],"n":[{"t":1,"i":"AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM","ot":1,"e":0,"u":"","p":"{{ static_url('images/AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM.jpg') }}","w":1920,"h":450,"el":"","er":""}],"ce":{},"s":4,"c":1,"pl":0,"i":4000,"a":1500,"h":false,"o":false,"t":1,"p":0,"pt":0,"bt":1,"ws2":false,"f":{},"at":0,"ws":false};					// 当前页面的自定义数据（页面独立样式设置）
+var _bannerData = _pageBannerData;
 
 var _mallOpen = false;
 

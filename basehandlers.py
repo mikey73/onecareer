@@ -9,6 +9,7 @@ import threading
 from tornado.web import HTTPError
 from tornado.web import RequestHandler
 from tornado.stack_context import StackContext
+from urllib import unquote
 
 from common import errors
 from common.compat import (get_ident, string_types, class_types, iteritems)
@@ -89,6 +90,13 @@ class BaseHandler(RequestHandler):
         if self.current_user:
             return True
         return False
+
+    def get_next(self):
+        try:
+            nextURL = unquote(self.request.headers._as_list["Referer"][0].split('next=')[1])
+        except:
+            nextURL = "/welcome"
+        return nextURL
 
     def get_cur_account(self, **filters):
         """ get account bind to auth.acc_id from database,

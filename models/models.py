@@ -32,6 +32,10 @@ class Account(Base, ModelMixin):
     verify = relationship("Verification", uselist=False, backref="account")
     account_info = relationship("AccountInfo", uselist=False,
                                 backref="account", cascade="all, delete-orphan")
+    work_experience = relationship("WorkExperience", uselist=False,
+                                backref="account", cascade="all, delete-orphan")
+    education = relationship("Education", uselist=False,
+                                backref="account", cascade="all, delete-orphan")
 
     @classmethod
     def new(cls, email, password, fullname, role, is_valid=False, signup_source=AccountSignupSource.Site):
@@ -70,6 +74,7 @@ class Account(Base, ModelMixin):
 
     def get_settings(self):
         resp = MagicDict({
+            "pk": self.pk,
             "fullname": self.fullname,
             "email": self.email,
             "role": self.role,
@@ -133,3 +138,35 @@ class AccountInfo(Base, ModelMixin):
     address_line2 = sa.Column(sa.String, nullable=True)
     city = sa.Column(sa.String, nullable=True)
     state = sa.Column(sa.Enum(*USStates, name="states"), nullable=True)
+
+
+class WorkExperience(Base, ModelMixin):
+    __tablename__ = "work_experience"
+
+    _to_dict_attrs_ = ["pk", "company", "title", "start_time",
+                       "end_time", "description"]
+
+    pk = sa.Column(sa.Integer, primary_key=True)
+    account_pk = sa.Column(sa.Integer, sa.ForeignKey("account.pk"))
+    company = sa.Column(sa.String, nullable=False)
+    title = sa.Column(sa.String, nullable=False)
+    start_time = sa.Column(sa.String, nullable=False)
+    end_time = sa.Column(sa.String, nullable=False)
+    description = sa.Column(sa.String, nullable=False)
+
+    @classmethod
+    def get_work_experience_by_account(cls, account_pk, order=None, offset=None, limit=None):
+        query = cls.get_query(order=order, offset=offset, limit=limit, account_pk=account_pk)
+        return query.filter().all()
+
+
+class Education(Base, ModelMixin):
+    __tablename__ = "education"
+
+    _to_dict_attrs_ = ["pk", "college", "degree", "year"]
+
+    pk = sa.Column(sa.Integer, primary_key=True)
+    account_pk = sa.Column(sa.Integer, sa.ForeignKey("account.pk"))
+    college = sa.Column(sa.String, nullable=False)
+    degree = sa.Column(sa.String, nullable=False)
+    year = sa.Column(sa.String, nullable=False)
