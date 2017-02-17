@@ -52,8 +52,32 @@
 
 
 	<style type="text/css">
-		.button{
-width: 200px;
+		.button0{
+width: 180px;
+height: 36px;
+line-height: 200%;
+font-size: 120%;
+color: #fff;
+border-radius: 5px;
+margin:0 0 0 0;
+position: relative;
+overflow: hidden;
+border:1px solid #FFA54F;
+box-shadow: 0 1px 2px #FFB90F inset,0 -1px 0 #FF3030 inset,0 -2px 3px #FFB90F inset;
+background: -webkit-linear-gradient(top,#FF7F24, #FF3030);
+background: -moz-linear-gradient(top,#FF7F24, #FF3030);
+background: linear-gradient(top,#FF7F24, #FF3030);
+border-radius: .3em; 
+-webkit-border-radius: .3em; /* for Webkit */ 
+-moz-border-radius: .3em;  /* for Firefox */
+}
+.button0:hover{
+background: -webkit-linear-gradient(top,#FF6347,#FF7F24);
+background: -moz-linear-gradient(top,#FF6347,#FF7F24);
+background: linear-gradient(top,#FF6347,#FF7F24);
+}
+.button{
+width: 180px;
 height: 36px;
 line-height: 200%;
 font-size: 120%;
@@ -269,7 +293,7 @@ background: linear-gradient(top,#70bfef,#4097ce);
 	
 <div class="imageSwitchShowName photoSwitchBg" style="position: absolute; display: none; z-index: 2; width: 1349px; height: 30px; line-height: 30px; top: 768px; left: 0px;"><span class="spanHiddenName spanShowName" style="margin-left: 10px;"></span><span class="spanHiddenName " style="margin-left: 10px;"></span></div><div></div><div class="switchGroup billboard billboard13 billboard2" style="width: 100%; position: relative; height: 768px; overflow: hidden; margin: 0px auto;">
 <div class="billboard_item arrowImg billboardItem_2 billboardAnim billboardItem_2_start" style="width: 1349px; height: 768px; animation-duration: 1500ms; display: block;">
-<a class="J_bannerItem" hidefocus="true" title="" href="javascript:;" target="" style="width: 1349px; height: 768px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1; background-image: url(&quot;../static/images/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY.jpg&quot;); background-position: 50% 50%; background-repeat: no-repeat;" onclick="return false;">
+<a class="J_bannerItem" hidefocus="true" title="" href="javascript:;" target="" style="width: 1349px; height: 450px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1; background-image: url(&quot;../static/images/AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM.jpg&quot;); background-position: 50% 50%; background-repeat: no-repeat;" onclick="return false;">
 </a>
 </div>
 <div class="billboard_item arrowImg billboardItem_2 billboardAnim" style="width: 1349px; height: 768px; animation-duration: 1500ms; display: none;">
@@ -339,7 +363,6 @@ background: linear-gradient(top,#70bfef,#4097ce);
 <table class="navBottom" cellpadding="0" cellspacing="0"><tbody><tr><td class="navBottomLeft"></td><td class="navBottomCenter"></td><td class="navBottomRight"></td></tr></tbody></table>
 </div>
 </div>
-<a href="jobhunterLogin.html" style="display:none;">求职者</a><a href="mentorLogin.html" style="display:none;">导师</a><a href="HRLogin.html" style="display:none;">HR</a>
 								</td>
 								<td class="bannerRight"></td>
 							</tr>
@@ -438,7 +461,7 @@ background: linear-gradient(top,#70bfef,#4097ce);
 </td>
 <td class="titleCenter titleCenter27" valign="top">
 <div class="titleText titleText27"><span class="bannerNormalTitle fk_mainTitle mainTitle mainTitle27">
-One Career会员资料</span></div>
+教育经历</span></div>
 </td>
 <td class="titleRight titleRight27" valign="top">
 </td>
@@ -458,63 +481,25 @@ One Career会员资料</span></div>
 </tbody></table>
 <table class="memberSignup jz-memberSignup" cellpadding="6px" cellspacing="6px">
 <tbody>
-
-<form id="form-memberSignup" action="/account/info" method="post" onsubmit="return checkinfo()">
 <tr>
-<td class="itemName"><div class="itemSpace"><span></span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><label id="info" style="color:red;" value="">{{info}}</label></div></td>
-</tr>
+<div align="center">
+<label id="cnt" style="color:red;" hidden="hidden">0</label>
+<label id="skip" style="color:red;" hidden="hidden">0</label>
+</div></tr>
 <tr>
-<td class="itemName"><div class="itemSpace"><span>姓名：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input id="fullname" name="fullname" type="text" maxlength="50" placeholder="First and last name" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" />&nbsp;<font class="g_stress">*</font></div></td>
-</tr>
+<div id="dynamic_form0" align="center" hidden="hidden">
+</div></tr>
 <tr>
-<td class="itemName"><div class="itemSpace"><span>邮箱：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input id="email" readOnly="true" disabled="disabled" name="email" maxlength="50" placeholder="you@example.com" class="g_itext itemEdit userAddItem" style="width:200px;height:25px;" />&nbsp;<font class="g_stress"></font></div></td>
-</tr>
+<div id="dynamic_form" align="center">
+</div></tr>
 <tr>
-<td class="itemName"><div class="itemSpace"><span>会员角色：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I0" name="role" value="Talent" checked="checked"><label for="M543F3siteFormCheckbox5I0">求职者</label></div><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I1" name="role" value="Mentor"><label for="M543F3siteFormCheckbox5I1">导师</label></div><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I1" name="role" value="HR"><label for="M543F3siteFormCheckbox5I1">HR</label></div>&nbsp;<font class="g_stress">*</font></div></td>
-</tr>
-<tr>
-<td class="itemName"><div class="itemSpace"><span>关注行业：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I0" name="industry" value="IT" checked="checked"><label for="M543F3siteFormCheckbox5I0">IT</label></div><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I1" name="industry" value="Finance"><label for="M543F3siteFormCheckbox5I1">Finance</label></div><div class="siteFormItemCheckItem_N_U siteFormItemCheckItem_N_U_A"><input type="radio" id="M543F3siteFormCheckbox5I1" name="industry" value="Both"><label for="M543F3siteFormCheckbox5I1">Both</label></div><font class="g_stress">*</font></div></td>
-</tr>
-<tr>
-<td class="itemName"><div class="itemSpace"><span>电话：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input id="phone_num" name="phone_num" type="text" maxlength="50" placeholder="xxx-xxx-xxxx" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" />&nbsp;<font class="g_stress">*</font></div></td>
-</tr>
-<tr>
-<td class="itemName"><div class="itemSpace"><span>微信：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input id="wechat" name="wechat" type="text" maxlength="50" placeholder="Your Wechat ID" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" />&nbsp;<font class="g_stress"></font></div></td>
-</tr>
-<tr>
-<td class="itemName"><div class="itemSpace"><span>地址1：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input id="address_line1" name="address_line1" type="text" maxlength="50" placeholder="Your address line 1" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" />&nbsp;<font class="g_stress"></font></div></td>
-</tr>
-<tr>
-<td class="itemName"><div class="itemSpace"><span>地址2：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input id="address_line2" name="address_line2" type="text" maxlength="50" placeholder="Your address line 2" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" />&nbsp;<font class="g_stress"></font></div></td>
-</tr>
-<tr>
-<td class="itemName"><div class="itemSpace"><span>城市：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><input id="city" name="city" type="text" maxlength="50" placeholder="The city you are in" class="g_itext itemEdit userAddItem isCheckUAI" style="width:200px;height:25px;" />&nbsp;<font class="g_stress">*</font></div></td>
-</tr>
-<tr>
-<td class="itemName"><div class="itemSpace"><span>州名：</span></div></td>
-<td class="itemCtrl"><div class="itemSpace"><select name="state" id="state" style="width:200px;height:25px;">
-    <option value="Select">Select the state you are in</option>
-    </select>&nbsp;<font class="g_stress">*</font></div></td>
-</tr>
-<tr>
-<td class="itemName">
+<div align="center">
+<br>
 {% module xsrf_form_html() %}
-</td>
-<td class="itemCtrl">
-<button class="button" type="submit" id="submit">保存</button>
-</td>
+<button class="button0" id="addBtn" onclick="add({})">+ Add Education</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button class="button" id="submitBtn" onclick="checkinfo()">Save</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
 </tr>
-</form>
 </tbody></table>
 </div>
 </td>
@@ -651,103 +636,149 @@ One Career会员资料</span></div>
 
 <script type="text/javascript">
 window.onload = function() { 
-	$('#fullname').val("{{account_info.fullname}}");
-	$('#email').val("{{account_info.email}}");
-	//$('#role').val("{{account_info.role}}");
-	selectradio("role","{{account_info.role}}");
-	//$('#industry').val("{{account_info.industry}}");
-	selectradio("industry","{{account_info.industry}}");
-	$('#phone_num').val("{{account_info.phone_num}}");
-	$('#wechat').val("{{account_info.wechat}}");
-	$('#address_line1').val("{{account_info.address_line1}}");
-	$('#address_line2').val("{{account_info.address_line2}}");
-	$('#city').val("{{account_info.city}}");
-	var USStates = [
-    "AA", "AE", "AK", "AL", "AP", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE",
-    "FM", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD",
-    "ME", "MH", "MI", "MN", "MO", "MP", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM",
-    "NV", "NY", "OH", "OK", "OR", "PA", "PR", "PW", "RI", "SC", "SD", "TN", "TX", "UT",
-    "VA", "VI", "VT", "WA", "WI", "WV", "WY"];
-	for (var key in USStates)
-	{
-		var str = "<option value='"+USStates[key]+"'>"+USStates[key]+"</option>";
-		console.log(str);
-		$("#state").append(str); 
-	}
-	$('#state').val("{{account_info.state}}");
-
-}
-
-function selectradio(name,value){                           //取消radio的选择
-	var x=document.getElementsByName(name);  //获取所有name=brand的元素
-	for(var i=0;i<x.length;i++){ //对所有结果进行遍历，如果状态是被选中的，则将其选择取消
-		if (x[i].value==value){
-			x[i].checked=true;
-		}
-		else{
-			x[i].checked=false;
+	var data = '{% raw education %}';
+	//data.replace("u","").replace("'", '"');
+	data = JSON.parse(data);
+	//console.log(data);
+	if (data.length > 0){
+		for (var Key in data){
+		add(data[Key]);
 		}
 	}
+	else{
+		add({});
+	}
 }
+
+function lock_end(n){
+	var end_month = document.getElementById("end_month"+n);
+	var end_year = document.getElementById("end_year"+n);
+	var is_current = document.getElementById("is_current"+n);
+	if (is_current.checked){
+		end_month.value="Month"; 
+		end_year.value="Year";
+		end_month.disabled=true;
+		end_year.disabled=true;
+	}
+	else{
+		end_month.disabled=false;
+		end_year.disabled=false;
+	}
+}
+
+
+function remove(n){
+	var div = document.getElementById("dynamic_form");
+	div.removeChild(document.getElementById("div"+n));
+	var skip =document.getElementById('skip').innerHTML;
+	document.getElementById('skip').innerHTML = skip+'_'+n;
+	var skip_list = document.getElementById('skip').innerHTML.split("_");
+	var cnt =parseInt(document.getElementById('cnt').innerHTML);
+	if (skip_list.length == cnt){
+		for( var i = 1; i <= cnt; i ++ ){
+				if (skip_list.indexOf(String(i))==-1){
+					document.getElementById("remove"+i).style.visibility="hidden";
+				}
+				}
+	}
+}
+
+function add(data){
+	var n =parseInt(document.getElementById('cnt').innerHTML)+1;
+	document.getElementById('cnt').innerHTML = n;
+	//console.log("add");
+	//console.log(data);
+	s='<div id="div'+n+'">\
+	<label id="info'+n+'" style="color:red;"></label><br><br><label id="pk'+n+'" hidden="hidden" value="0"></label><input id="university'+n+'" name="university" type="text" maxlength="50" placeholder="University/College" style="width:200px;height:25px;" />\
+	&nbsp;<font class="g_stress">*</font>\
+	&nbsp;&nbsp;&nbsp;\
+	<input id="degree'+n+'" name="degree" type="text" maxlength="50" placeholder="B.S., Computer Science" style="width:200px;height:25px;" />\
+	&nbsp;<font class="g_stress">*</font>\
+	&nbsp;&nbsp;&nbsp;<select name="graduation_year" id="graduation_year'+n+'" style="width:130px;height:28px;">\
+	<option value="Graduation Year">Graduation Year</option>\
+	</select>&nbsp;\
+	<font class="g_stress">*</font>\
+	&nbsp;&nbsp;<image id="remove'+n+'" style="visibility:hidden;" src="'+'{{static_url("images/delete.png")}}'+'" onclick="remove('+n+')"></image>\
+	<br><br></div>';
+	document.getElementById("dynamic_form0").innerHTML += s;
+	document.getElementById("dynamic_form").appendChild(document.getElementById("div"+n));
+	//console.log(s);
+	var date = new Date();
+	var year = date.getFullYear();
+	for (var i=year+5;i>=year-30;i--){
+		var str = "<option value='"+i+"'>"+i+"</option>";
+		$("#graduation_year"+n).append(str); 
+	}
+	if (JSON.stringify(data)!='{}'){
+		$("#pk"+n).val(data["pk"]); 
+		$("#university"+n).val(data["university"]); 
+		$("#degree"+n).val(data["degree"]); 
+		$("#graduation_year"+n).val(data["graduation_year"]);
+	}
+	var skip =document.getElementById('skip').innerHTML;
+	var skip_list = skip.split("_");
+	if (skip_list.length < n){
+		for( var i = 1; i <= n; i ++ ){
+				if (skip_list.indexOf(String(i))==-1){
+					document.getElementById("remove"+i).style.visibility="visible";
+				}
+				}
+	}
+}
+
 
 function checkinfo(){
 
-			var fullname = $('#fullname').val()
-			var role=$('input:radio[name="role"]:checked').val();
-			var industry=$('input:radio[name="industry"]:checked').val();
-			var city = $('#city').val()
-			var state = $('#state').val()
+			var cnt = parseInt(document.getElementById('cnt').innerHTML);
+			var skip = document.getElementById('skip').innerHTML.split("_");
+			var data = [];
+			//console.log(skip);
 			
-			if (fullname.replace(/(^\s*)|(\s*$)/g, "").length ==0) { 
-				document.getElementById('info').innerHTML = '姓名不能为空！'; 
-				document.getElementById('fullname').focus()
-				return false;
-			}
-			
-			if(role==null){
-				document.getElementById('info').innerHTML = '请至少选择一个会员角色！'; 
-				selectradio("role","Talent");
-                return false;
-            }
-			
-			if(industry==null){
-				document.getElementById('info').innerHTML = '请至少选择一个关注行业!'; 
-                return false;
-            }
-			
-			if (checkSubmitPhone()==false){
-					document.getElementById('phone_num').focus()
-					return false;
+			for( var n = 1; n <= cnt; n ++ ){
+				if (skip.indexOf(String(n))==-1){
+				//console.log(n);
+					var university = $("#university"+n).val();
+					if (university.replace(/(^\s*)|(\s*$)/g, "").length ==0) { 
+						document.getElementById("info"+n).innerHTML = '学校不能为空！'; 
+						document.getElementById("university"+n).focus();
+						return false;
+					}
+					
+					var degree = $("#degree"+n).val();
+					if (degree.replace(/(^\s*)|(\s*$)/g, "").length ==0) { 
+						document.getElementById("info"+n).innerHTML = '学位不能为空！'; 
+						document.getElementById("degree"+n).focus();
+						return false;
+					}
+					
+					var graduation_year = $("#graduation_year"+n).val();
+					if (graduation_year=="Graduation Year") { 
+						document.getElementById("info"+n).innerHTML = '毕业年份不能为空！'; 
+						document.getElementById("graduation_year"+n).focus();
+						return false;
+					}
+					
+					document.getElementById("info"+n).innerHTML = ''; 
+					
+					data.push({
+					"pk":parseInt($("#pk"+n).val()),
+					"university":university,
+					"degree":degree,
+					"graduation_year":graduation_year
+					});
 				}
-			
-			if (city.replace(/(^\s*)|(\s*$)/g, "").length ==0) { 
-				document.getElementById('info').innerHTML = '城市不能为空！'; 
-				document.getElementById('city').focus()
-				return false;
 			}
 			
-			if (state == "Select") { 
-				document.getElementById('info').innerHTML = '州名不能为空！'; 
-				document.getElementById('state').focus()
-				return false;
-			}
-}
-
-function checkSubmitPhone(){
-		var phone = $('#phone_num').val();
-		if (phone.replace(/(^\s*)|(\s*$)/g, "").length ==0) { 
-				document.getElementById('info').innerHTML = '电话不能为空!';
-				return false;
-		}
-		for(ilen=0;ilen<phone.length;ilen++)
-		{
-			if((phone.charAt(ilen) < '0' || phone.charAt(ilen) > '9') && (phone.charAt(ilen)!='-') )
-			{
-				document.getElementById('info').innerHTML = '非法的电话号码!';
-				return false;
-			}
-		}
-		return true;
+			//alert(JSON.stringify(data));
+			
+			$.post("/account/education",
+			  {
+				data:JSON.stringify(data),
+				_xsrf: $("input[name='_xsrf']").val()
+			  },function(result){
+			  alert('Education info successfully saved.');
+			  window.location = "/account/education";
+  });
 }
 
 function showYuanDanWindow(){
@@ -908,7 +939,7 @@ $(function() {
 	//各个模块inc吐出脚本
 	Site.initCorpTitleJump();
 Site.initCorpTitleContent("primaryTitle", "<div style=\"\" class=\"newPrimaryTitle\"><span style=\"font-size: 30px;\"><b><font style=\"color: rgb(255, 255, 255);\" color=\"#ffffff\">THE ONE CAREER<\/font><\/b><\/span><\/div>", "pointer-events:none;");
-Site.initBanner({"_open":true,"data":[{"title":"","desc":"","imgWidth":1920,"imgHeight":768,"ot":0,"src":"{{ static_url('images/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY.jpg') }}","edgeLeft":"","edgeRight":""},{"title":"","desc":"","imgWidth":1920,"imgHeight":768,"ot":1,"src":"{{ static_url('images/AD0Iw_D2BRACGAAgy86SwwUo4tft6wUwgA84gAY.jpg') }}","edgeLeft":"","edgeRight":""}],"width":1920,"height":768,"playTime":4000,"animateTime":1500,"from":"banner","btnType":0,"wideScreen":false}, {"_open":false}, 4);
+Site.initBanner({"_open":true,"data":[{"title":"","desc":"","imgWidth":1920,"imgHeight":450,"ot":1,"src":"{{ static_url('images/AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM.jpg') }}","edgeLeft":"","edgeRight":""}],"width":1920,"height":450,"playTime":4000,"animateTime":1500,"from":"banner","btnType":1,"wideScreen":false}, {"_open":false}, 4);
 jzUtils.run({ "name": "ImageEffect.FUNC.BASIC.Init", "callMethod": true }, {"moduleId": 526, "imgEffOption": {"effType":1,"borderType":false,"borderColor":"#000","borderWidth":1,"borderStyle":1,"hoverPicPath":"http://0.ss.faisys.com/image/floatImgHoverDef.png","openHoverPic":false,"isFontIcon":false,"ishovFont":false,"hovFont":"faisco-icons-contact2","hovFontColor":"#222222","picPath":"http://12702975.s21i-12.faiusr.com/2/ABUIABACGAAg2q7VxAUooM-htgQwwgE4qwI.jpg","isInit":false}, "tagetOption": {"targetParent":"floatImg_J","target":"floatImg_J"}, "callback": Site.createImageEffectContent_photo, "callbackArgs": []});
 Site.initModuleMemberSignup(27, 1,false, "/index.jsp");
 
@@ -986,10 +1017,10 @@ var nav18SubMenu=[];
 var nav19SubMenu=[];
 var _customBackgroundData = {"styleDefault":true,"s":true,"h":false,"r":3,"o":"","sw":-1,"e":0,"wbh":-1,"wbw":-1,"clw":-1,"crw":-1,"id":"","p":"","bBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"cmBg":{"y":0,"r":3,"f":"","p":"","c":"#000"},"bm":{},"cm":{},"cp":{"y":0}};          //自定义的数据
 var _templateBackgroundData = {"id":"","bBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cmBg":{"c":"#000","f":"","r":3,"p":"","y":0},"cp":{"y":0},"s":true,"h":false,"r":3,"o":"","sw":-1,"e":0,"wbh":-1,"wbw":-1,"clw":-1,"crw":-1,"p":"","bm":{},"cm":{}};// 模版的数据
-var _useTemplateBanner = true;				// 是否使用全局模版
+var _useTemplateBanner = false;				// 是否使用全局模版
 var _templateBannerData = {"l":[{"i":"AD0Iw_D2BRACGAAgy86SwwUo4tft6wUwgA84gAY","p":"{{ static_url('images/AD0Iw_D2BRACGAAgy86SwwUo4tft6wUwgA84gAY.jpg') }}","w":1920,"h":768,"tp":"http://12431427.s61i.faiusr.com/2/AD0Iw_D2BRACGAAgy86SwwUo4tft6wUwgA84gAY!100x100.jpg"},{"i":"AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY","p":"{{ static_url('images/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY.jpg') }}","w":1920,"h":768,"tp":"http://12431427.s61i.faiusr.com/2/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY!100x100.jpg"},{"i":"AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY","p":"{{ static_url('images/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY.jpg') }}","w":1920,"h":768,"tp":"http://12431427.s61i.faiusr.com/2/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY!100x100.jpg"},{"i":"AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY","p":"{{ static_url('images/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY.jpg') }}","w":1920,"h":768,"tp":"http://12431427.s61i.faiusr.com/2/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY!100x100.jpg"}],"n":[{"t":1,"i":"AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY","ot":0,"e":0,"u":"","p":"{{ static_url('images/AD0Iw_D2BRACGAAgyc6SwwUojteHogYwgA84gAY.jpg') }}","w":1920,"h":768,"el":"","er":""},{"t":1,"i":"AD0Iw_D2BRACGAAgy86SwwUo4tft6wUwgA84gAY","ot":1,"e":0,"u":"","p":"{{ static_url('images/AD0Iw_D2BRACGAAgy86SwwUo4tft6wUwgA84gAY.jpg') }}","w":1920,"h":768,"el":"","er":""}],"ce":{},"s":4,"c":2,"pl":0,"bt":0,"at":13,"i":4000,"a":1500,"h":false,"o":false,"t":1,"p":0,"pt":0,"ws2":false,"f":{},"ws":false};		// 模版的数据
-var _pageBannerData = {"s":0,"i":4000,"a":1500,"h":false,"o":false,"t":1,"p":0,"pt":0,"pl":0,"bt":1,"ws2":false,"l":[],"f":{},"ce":{},"n":[],"c":3,"at":0,"ws":false};					// 当前页面的自定义数据（页面独立样式设置）
-var _bannerData = _templateBannerData;
+var _pageBannerData = {"l":[{"i":"AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM","p":"{{ static_url('images/AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM.jpg') }}","w":1920,"h":450,"tp":"http://12431427.s61i.faiusr.com/2/AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM!100x100.jpg"}],"n":[{"t":1,"i":"AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM","ot":1,"e":0,"u":"","p":"{{ static_url('images/AD0Iw_D2BRACGAAgo-2NwwUopY6V9QIwgA84wgM.jpg') }}","w":1920,"h":450,"el":"","er":""}],"ce":{},"s":4,"c":1,"pl":0,"i":4000,"a":1500,"h":false,"o":false,"t":1,"p":0,"pt":0,"bt":1,"ws2":false,"f":{},"at":0,"ws":false};					// 当前页面的自定义数据（页面独立样式设置）
+var _bannerData = _pageBannerData;
 
 var _mallOpen = false;
 

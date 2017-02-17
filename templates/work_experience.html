@@ -668,16 +668,19 @@ function lock_end(n){
 
 
 function remove(n){
-	var skip_list = document.getElementById('skip').innerHTML.split("_");
-	var cnt =parseInt(document.getElementById('cnt').innerHTML);
-	if (skip_list.length == cnt){
-		document.getElementById("info"+n).innerHTML = '至少保留一项工作经历！'; 
-		return false;
-	}
 	var div = document.getElementById("dynamic_form");
 	div.removeChild(document.getElementById("div"+n));
 	var skip =document.getElementById('skip').innerHTML;
 	document.getElementById('skip').innerHTML = skip+'_'+n;
+	var skip_list = document.getElementById('skip').innerHTML.split("_");
+	var cnt =parseInt(document.getElementById('cnt').innerHTML);
+	if (skip_list.length == cnt){
+		for( var i = 1; i <= cnt; i ++ ){
+				if (skip_list.indexOf(String(i))==-1){
+					document.getElementById("remove"+i).style.visibility="hidden";
+				}
+				}
+	}
 }
 
 function add(data){
@@ -691,7 +694,7 @@ function add(data){
 	&nbsp;&nbsp;&nbsp;\
 	<input id="title'+n+'" name="title" type="text" maxlength="50" placeholder="Job Title" style="width:220px;height:25px;" />\
 	&nbsp;<font class="g_stress">*</font>\
-	&nbsp;&nbsp;<image src="'+'{{static_url("images/delete.png")}}'+'" onclick="remove('+n+')"></image><br><br>\
+	&nbsp;&nbsp;<image id="remove'+n+'" style="visibility:hidden;" src="'+'{{static_url("images/delete.png")}}'+'" onclick="remove('+n+')"></image><br><br>\
 	Start&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
 	End&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
@@ -726,7 +729,7 @@ function add(data){
 	}
 	var date = new Date();
 	var year = date.getFullYear();
-	for (var i=year;i>=year-40;i--){
+	for (var i=year;i>=year-30;i--){
 		var str = "<option value='"+i+"'>"+i+"</option>";
 		$("#start_year"+n).append(str); 
 		$("#end_year"+n).append(str);
@@ -747,19 +750,17 @@ function add(data){
 		}
 		$("#description"+n).val(data["description"]); 
 	}
-}
-
-function selectradio(name,value){                           //取消radio的选择
-	var x=document.getElementsByName(name);  //获取所有name=brand的元素
-	for(var i=0;i<x.length;i++){ //对所有结果进行遍历，如果状态是被选中的，则将其选择取消
-		if (x[i].value==value){
-			x[i].checked=true;
-		}
-		else{
-			x[i].checked=false;
-		}
+	var skip =document.getElementById('skip').innerHTML;
+	var skip_list = skip.split("_");
+	if (skip_list.length < n){
+		for( var i = 1; i <= n; i ++ ){
+				if (skip_list.indexOf(String(i))==-1){
+					document.getElementById("remove"+i).style.visibility="visible";
+				}
+				}
 	}
 }
+
 
 function checkinfo(){
 

@@ -245,3 +245,46 @@ class WorkExperienceHandler(BaseHandler):
         for item in work_experience:
             data.append(item.to_dict())
         self.render('work_experience.html',  work_experience=data)
+
+
+class EducationHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        data = []
+        education = db.Education.get_education_by_account(self.current_user.pk)
+        for item in education:
+            data.append(item.to_dict())
+        data = json.dumps(data)
+        self.render('education.html',  education=data)
+
+    @tornado.web.authenticated
+    def post(self):
+        data = json.loads(self.form.data)
+        w_pk = []
+        education = db.Education.get_education_by_account(self.current_user.pk)
+        for item in education:
+            w_pk.append(item.pk)
+        for item in data:
+            item["account_pk"] = self.current_user.pk
+            education = db.Education.get_one(pk=item["pk"])
+            if education:
+                if item["pk"] in w_pk:
+                    w_pk.remove(item["pk"])
+                item.pop("pk")
+                education.update(commit=False, **item)
+            else:
+                item.pop("pk")
+                education = db.Education.create(**item)
+                education.save(commit=False)
+
+        for pk in w_pk:
+            education = db.Education.get_one(pk=pk)
+            education.delete(commit=False)
+
+        db.cur_session().commit()
+
+        data = []
+        education = db.Education.get_education_by_account(self.current_user.pk)
+        for item in education:
+            data.append(item.to_dict())
+        self.render('education.html',  education=data)

@@ -17,4 +17,5 @@ url_patterns = [
     (r"/welcome", WelcomeHandler),
     (r"/account/info", AccountInfoHandler),
     (r"/account/work", WorkExperienceHandler),
+    (r"/account/education", EducationHandler),
 ]

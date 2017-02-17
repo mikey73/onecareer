@@ -89,7 +89,7 @@ class Account(Base, ModelMixin):
         })
         if self.account_info:
             resp.update(self.account_info.to_dict())
-
+        print resp
         return resp
 
     def update_settings(self, **settings):
@@ -124,7 +124,7 @@ class Verification(Base, VerifyMixin):
 class AccountInfo(Base, ModelMixin):
     __tablename__ = "account_info"
 
-    _to_dict_attrs_ = ["pk", "phone_num", "wechat", "avatar_uri",
+    _to_dict_attrs_ = ["phone_num", "wechat", "avatar_uri",
                        "address_line1", "address_line2", "city", "state"]
 
     States = USStates
@@ -163,10 +163,15 @@ class WorkExperience(Base, ModelMixin):
 class Education(Base, ModelMixin):
     __tablename__ = "education"
 
-    _to_dict_attrs_ = ["pk", "college", "degree", "year"]
+    _to_dict_attrs_ = ["pk", "university", "degree", "graduation_year"]
 
     pk = sa.Column(sa.Integer, primary_key=True)
     account_pk = sa.Column(sa.Integer, sa.ForeignKey("account.pk"))
-    college = sa.Column(sa.String, nullable=False)
+    university = sa.Column(sa.String, nullable=False)
     degree = sa.Column(sa.String, nullable=False)
-    year = sa.Column(sa.String, nullable=False)
+    graduation_year = sa.Column(sa.String, nullable=False)
+
+    @classmethod
+    def get_education_by_account(cls, account_pk, order=None, offset=None, limit=None):
+        query = cls.get_query(order=order, offset=offset, limit=limit, account_pk=account_pk)
+        return query.filter().all()
