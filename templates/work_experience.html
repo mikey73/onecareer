@@ -483,7 +483,6 @@ background: linear-gradient(top,#70bfef,#4097ce);
 <tbody>
 <tr>
 <div align="center">
-<label id="info" style="color:red;" value="">{{info}}</label><br>
 <label id="cnt" style="color:red;" hidden="hidden">0</label>
 <label id="skip" style="color:red;" hidden="hidden">0</label>
 </div></tr>
@@ -637,7 +636,9 @@ background: linear-gradient(top,#70bfef,#4097ce);
 
 <script type="text/javascript">
 window.onload = function() { 
-	var data = {% raw work_experience %};
+	var data = '{% raw work_experience %}';
+	//data.replace("u","").replace("'", '"');
+	data = JSON.parse(data);
 	//console.log(data);
 	if (data.length > 0){
 		for (var Key in data){
@@ -654,6 +655,8 @@ function lock_end(n){
 	var end_year = document.getElementById("end_year"+n);
 	var is_current = document.getElementById("is_current"+n);
 	if (is_current.checked){
+		end_month.value="Month"; 
+		end_year.value="Year";
 		end_month.disabled=true;
 		end_year.disabled=true;
 	}
@@ -665,6 +668,12 @@ function lock_end(n){
 
 
 function remove(n){
+	var skip_list = document.getElementById('skip').innerHTML.split("_");
+	var cnt =parseInt(document.getElementById('cnt').innerHTML);
+	if (skip_list.length == cnt){
+		document.getElementById("info"+n).innerHTML = '至少保留一项工作经历！'; 
+		return false;
+	}
 	var div = document.getElementById("dynamic_form");
 	div.removeChild(document.getElementById("div"+n));
 	var skip =document.getElementById('skip').innerHTML;
@@ -677,7 +686,7 @@ function add(data){
 	//console.log("add");
 	//console.log(data);
 	s='<div id="div'+n+'">\
-	<br><label id="pk'+n+'" hidden="hidden" value="0"></label><input id="company'+n+'" name="company" type="text" maxlength="50" placeholder="Company Name" style="width:220px;height:25px;" />\
+	<label id="info'+n+'" style="color:red;"></label><br><br><label id="pk'+n+'" hidden="hidden" value="0"></label><input id="company'+n+'" name="company" type="text" maxlength="50" placeholder="Company Name" style="width:220px;height:25px;" />\
 	&nbsp;<font class="g_stress">*</font>\
 	&nbsp;&nbsp;&nbsp;\
 	<input id="title'+n+'" name="title" type="text" maxlength="50" placeholder="Job Title" style="width:220px;height:25px;" />\
@@ -704,7 +713,7 @@ function add(data){
 	<font class="g_stress">*</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
 	<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="is_current'+n+'" onclick="lock_end('+n+')">Current</input><br><br>\
 	<textarea id="description'+n+'" name="description" maxlength="500" placeholder="Your accomplishments, specific tools and technologies, and your responsibilities." class="g_itext itemEdit userAddItem isCheckUAI" style="width:466px;height:100px;"></textarea>\
-	&nbsp;<font class="g_stress">*</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br></div>';
+	&nbsp;<font class="g_stress">*</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br></div>';
 	document.getElementById("dynamic_form0").innerHTML += s;
 	document.getElementById("dynamic_form").appendChild(document.getElementById("div"+n));
 	//console.log(s);
@@ -764,14 +773,14 @@ function checkinfo(){
 				//console.log(n);
 					var company = $("#company"+n).val();
 					if (company.replace(/(^\s*)|(\s*$)/g, "").length ==0) { 
-						document.getElementById('info').innerHTML = '公司不能为空！'; 
+						document.getElementById("info"+n).innerHTML = '公司不能为空！'; 
 						document.getElementById("company"+n).focus();
 						return false;
 					}
 					
 					var title = $("#title"+n).val();
 					if (title.replace(/(^\s*)|(\s*$)/g, "").length ==0) { 
-						document.getElementById('info').innerHTML = '职位不能为空！'; 
+						document.getElementById("info"+n).innerHTML = '职位不能为空！'; 
 						document.getElementById("title"+n).focus();
 						return false;
 					}
@@ -780,12 +789,12 @@ function checkinfo(){
 					var start_month = $("#start_month"+n).val();
 					var start_time = start_year + "/" + start_month;
 					if (start_month=="Month") { 
-						document.getElementById('info').innerHTML = '开始月份不能为空！'; 
+						document.getElementById("info"+n).innerHTML = '开始月份不能为空！'; 
 						document.getElementById("start_month"+n).focus();
 						return false;
 					}
 					if (start_year=="Year") { 
-						document.getElementById('info').innerHTML = '开始年份不能为空！'; 
+						document.getElementById("info"+n).innerHTML = '开始年份不能为空！'; 
 						document.getElementById("start_year"+n).focus();
 						return false;
 					}
@@ -794,7 +803,7 @@ function checkinfo(){
 					var month = date.getMonth() + 1;
 					var year = date.getFullYear();
 					if (start_year==year && start_month>month) { 
-						document.getElementById('info').innerHTML = '开始时间不能晚于今天！'; 
+						document.getElementById("info"+n).innerHTML = '开始时间不能晚于今天！'; 
 						document.getElementById("start_year"+n).focus();
 						return false;
 					}
@@ -804,22 +813,22 @@ function checkinfo(){
 					var end_time = end_year + "/" + end_month;
 					if (document.getElementById("is_current"+n).checked == false){
 						if (end_month=="Month") { 
-							document.getElementById('info').innerHTML = '结束月份不能为空！'; 
+							document.getElementById("info"+n).innerHTML = '结束月份不能为空！'; 
 							document.getElementById("end_month"+n).focus();
 							return false;
 						}
 						if (end_year=="Year") { 
-							document.getElementById('info').innerHTML = '结束年份不能为空！'; 
+							document.getElementById("info"+n).innerHTML = '结束年份不能为空！'; 
 							document.getElementById("end_year"+n).focus();
 							return false;
 						}
 						if (start_year>end_year || (start_year==end_year && start_month>end_month)){
-							document.getElementById('info').innerHTML = '开始时间不能晚于结束时间！'; 
+							document.getElementById("info"+n).innerHTML = '开始时间不能晚于结束时间！'; 
 							document.getElementById("start_year"+n).focus();
 							return false;
 						}
 						if (end_year==year && end_month>month) { 
-							document.getElementById('info').innerHTML = '结束时间不能晚于今天！'; 
+							document.getElementById("info"+n).innerHTML = '结束时间不能晚于今天！'; 
 							document.getElementById("end_year"+n).focus();
 							return false;
 						}
@@ -830,12 +839,12 @@ function checkinfo(){
 					
 					var description = $("#description"+n).val();
 					if (description.replace(/(^\s*)|(\s*$)/g, "").length ==0) { 
-						document.getElementById('info').innerHTML = '工作描述不能为空！'; 
+						document.getElementById("info"+n).innerHTML = '工作描述不能为空！'; 
 						document.getElementById("description"+n).focus();
 						return false;
 					}
 					
-					document.getElementById('info').innerHTML = ''; 
+					document.getElementById("info"+n).innerHTML = ''; 
 					
 					data.push({
 					"pk":parseInt($("#pk"+n).val()),
@@ -858,23 +867,6 @@ function checkinfo(){
 			  alert('Work experience successfully saved.');
 			  window.location = "/account/work";
   });
-}
-	
-function checkSubmitPhone(){
-		var phone = $('#phone_num').val();
-		if (phone.replace(/(^\s*)|(\s*$)/g, "").length ==0) { 
-				document.getElementById('info').innerHTML = '电话不能为空!';
-				return false;
-		}
-		for(ilen=0;ilen<phone.length;ilen++)
-		{
-			if((phone.charAt(ilen) < '0' || phone.charAt(ilen) > '9') && (phone.charAt(ilen)!='-') )
-			{
-				document.getElementById('info').innerHTML = '非法的电话号码!';
-				return false;
-			}
-		}
-		return true;
 }
 
 function showYuanDanWindow(){

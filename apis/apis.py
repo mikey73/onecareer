@@ -211,13 +211,12 @@ class WorkExperienceHandler(BaseHandler):
         work_experience = db.WorkExperience.get_work_experience_by_account(self.current_user.pk)
         for item in work_experience:
             data.append(item.to_dict())
-        data = json.dumps(data).encode("utf-8")
-        data = json.loads(data)
-        self.render('work_experience.html',  info="", work_experience=data)
+        data = json.dumps(data)
+        self.render('work_experience.html',  work_experience=data)
 
     @tornado.web.authenticated
     def post(self):
-        data = json.loads(self.form.data.encode("utf-8"))
+        data = json.loads(self.form.data)
         w_pk = []
         work_experience = db.WorkExperience.get_work_experience_by_account(self.current_user.pk)
         for item in work_experience:
@@ -245,4 +244,4 @@ class WorkExperienceHandler(BaseHandler):
         work_experience = db.WorkExperience.get_work_experience_by_account(self.current_user.pk)
         for item in work_experience:
             data.append(item.to_dict())
-        self.render('work_experience.html',  info="Work experience successfully saved.", work_experience=data)
+        self.render('work_experience.html',  work_experience=data)
