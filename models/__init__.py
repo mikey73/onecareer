@@ -22,6 +22,4 @@ def init_debug_data():
         user.is_valid = True
         user.save()
 
-    print user.to_dict()
-
     return user

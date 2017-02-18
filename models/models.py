@@ -89,7 +89,6 @@ class Account(Base, ModelMixin):
         })
         if self.account_info:
             resp.update(self.account_info.to_dict())
-        print resp
         return resp
 
     def update_settings(self, **settings):

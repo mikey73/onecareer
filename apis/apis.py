@@ -38,17 +38,17 @@ class LinkedinLoginHandler(BaseHandler):
             self.redirect("/welcome")
 
         l_api = self.conn.linkedin_client
-        authorization_url = l_api.request_authorization_url(self.config["linkedin_auth"]["redirect_url"])
+        authorization_url = l_api.request_authorization_url(self.config["linkedin_login"]["redirect_url"])
         self.redirect(authorization_url)
 
 
-class LinkedinAuthHandler(BaseHandler):
+class LinkedinLoginCallbackHandler(BaseHandler):
     def get(self):
         code = self.get_argument('code','')
         l_api = self.conn.linkedin_client
-        access_token = l_api.request_access_token(self.config["linkedin_auth"]["redirect_url"], code)
+        access_token = l_api.request_access_token(self.config["linkedin_login"]["redirect_url"], code)
         query_params = {'access_token': access_token,
-                        'uri': self.config["linkedin_auth"]["uri"],
+                        'uri': self.config["linkedin_login"]["uri"],
                         'method': 'GET',
                         'json_post_body': {},
                         'api_type': 'api_people'
@@ -73,6 +73,31 @@ class LinkedinAuthHandler(BaseHandler):
                 data=user.get_settings(),
                 ex=3600
         )
+        self.redirect(self.get_argument("next", "/welcome"))
+
+
+class LinkedinInfoHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        l_api = self.conn.linkedin_client
+        authorization_url = l_api.request_authorization_url(self.config["linkedin_info"]["redirect_url"])
+        self.redirect(authorization_url)
+
+
+class LinkedinInfoCallbackHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        code = self.get_argument('code','')
+        l_api = self.conn.linkedin_client
+        access_token = l_api.request_access_token(self.config["linkedin_info"]["redirect_url"], code)
+        query_params = {'access_token': access_token,
+                        'uri': self.config["linkedin_info"]["uri"],
+                        'method': 'GET',
+                        'json_post_body': {},
+                        'api_type': 'api_people'
+                        }
+        data = json.loads(l_api.request_api(query_params))
+        print data
         self.redirect(self.get_argument("next", "/welcome"))
 
 
